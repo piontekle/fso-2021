@@ -5,4 +5,4 @@ Exercises and projects for Full Stack Open, started 04-JAN-2021
 
 part0
   L FundamentalsOfWebApps
-    L exercises
+    L exercises.md
