@@ -7,25 +7,24 @@ const Button = ({ handleClick, rating }) => (
   <button onClick={() => handleClick(rating)}>{rating}</button>
 )
 
-const Display = ({ rating, value }) => <div>{rating} {value}</div>
+const Statistic = ({ rating, value }) => <div>{rating} {value}</div>
 
 const Statistics = ({ good, neutral, bad, total, avg, avgGood }) => {
   if (total === 0) return <div>No feedback given</div>
 
   return (
     <div>
-      <Display rating="good" value={good} />
-      <Display rating="neutral" value={neutral} />
-      <Display rating="bad" value={bad} />
-      <Display rating="total" value={total} />
-      <Display rating="average" value={avg} />
-      <Display rating="average positive" value={avgGood} />
+      <Statistic rating="good" value={good} />
+      <Statistic rating="neutral" value={neutral} />
+      <Statistic rating="bad" value={bad} />
+      <Statistic rating="total" value={total} />
+      <Statistic rating="average" value={avg} />
+      <Statistic rating="average positive" value={avgGood} />
     </div>
   )
 }
 
 const App = () => {
-  // save clicks of each button to its own state
   const [good, setGood] = useState(0);
   const [neutral, setNeutral] = useState(0);
   const [bad, setBad] = useState(0);
@@ -58,8 +57,8 @@ const App = () => {
   const setAverages = (good, bad, total) => {
     let totalScore = good - bad;
 
-    const average = totalScore !== 0 ? totalScore / (total) : 0;
-    const avgGood = good > 0 ? (good / (total)) * 100 : 0;
+    const average = totalScore !== 0 ? totalScore / total : 0;
+    const avgGood = good > 0 ? (good / total) * 100 : 0;
 
     setAverage(average);
     setAvgGood(avgGood);
