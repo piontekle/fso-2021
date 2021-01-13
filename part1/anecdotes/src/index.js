@@ -5,9 +5,18 @@ const Button = ({ handleClick, text }) => (
   <button onClick={handleClick}>{text}</button>
 )
 
+const Display = ({ heading, anecdote }) => (
+  <>
+    <h1>{heading}</h1>
+    <div>{anecdote.note}</div>
+    <div>has {anecdote.points} votes</div>
+  </>
+)
+
 const App = ({ anecdotes }) => {
   const [selected, setSelected] = useState(0);
   const [advice, setAdvice] = useState(anecdotes);
+  const [highest, setHighest] = useState(0);
 
   const getRandom = (min, max) => {
     return Math.floor(Math.random() * (max - min) + min);
@@ -24,15 +33,31 @@ const App = ({ anecdotes }) => {
     const newPoints = { ...advice[selected], points: currPoints }
     let newAdvice = advice;
     newAdvice[selected] = newPoints;
+
     setAdvice([...newAdvice]);
+
+    setHighest(findHighest(newAdvice));
+  }
+
+  const findHighest = (advice) => {
+    let highestIdx = highest;
+    let currMax = advice[highest].points;
+    for (let i = 0; i < advice.length; i++) {
+      if (advice[i].points > currMax) {
+        currMax = advice[i].points;
+        highestIdx = i;
+      }
+    }
+
+    return highestIdx;
   }
 
   return (
     <div>
-      <div>{advice[selected].note}</div>
-      <div>has {advice[selected].points} points</div>
+      <Display heading="Anecdote of the day" anecdote={advice[selected]} />
       <Button handleClick={handleClickVote} text="Vote" />
       <Button handleClick={handleClickNext} text="Next Anecdote" />
+      <Display heading="Anecdote with most votes" anecdote={advice[highest]} />
     </div>
   )
 }
