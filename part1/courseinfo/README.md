@@ -1,4 +1,4 @@
-# Fullstack Open Exercises Part 1a (1.1 - 1.2)
+# Fullstack Open Exercises Part 1a-b (1.1 - 1.5) Course Info
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
