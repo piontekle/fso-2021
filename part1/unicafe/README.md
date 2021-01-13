@@ -1,4 +1,4 @@
-# Fullstack Open Exercises Part 1d (1.6 - 1.14) Unicafe
+# Fullstack Open Exercises Part 1d (1.6 - 1.11) Unicafe
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 

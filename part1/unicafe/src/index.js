@@ -7,20 +7,27 @@ const Button = ({ handleClick, rating }) => (
   <button onClick={() => handleClick(rating)}>{rating}</button>
 )
 
-const Statistic = ({ rating, value }) => <div>{rating} {value}</div>
+const Statistic = ({ rating, value }) => (
+  <tr>
+    <td>{rating}</td>
+    <td>{value}</td>
+  </tr>
+)
 
 const Statistics = ({ good, neutral, bad, total, avg, avgGood }) => {
   if (total === 0) return <div>No feedback given</div>
 
   return (
-    <div>
-      <Statistic rating="good" value={good} />
-      <Statistic rating="neutral" value={neutral} />
-      <Statistic rating="bad" value={bad} />
-      <Statistic rating="total" value={total} />
-      <Statistic rating="average" value={avg} />
-      <Statistic rating="average positive" value={avgGood} />
-    </div>
+    <table>
+      <tbody>
+        <Statistic rating="good" value={good} />
+        <Statistic rating="neutral" value={neutral} />
+        <Statistic rating="bad" value={bad} />
+        <Statistic rating="total" value={total} />
+        <Statistic rating="average" value={avg} />
+        <Statistic rating="average positive" value={avgGood} />
+      </tbody>
+    </table>
   )
 }
 
@@ -65,7 +72,7 @@ const App = () => {
   }
 
   return (
-    <div>
+    <>
       <Header title="give feedback" />
       <Button handleClick={handleClick} rating="good" />
       <Button handleClick={handleClick} rating="neutral" />
@@ -79,7 +86,7 @@ const App = () => {
         avg={average}
         avgGood={avgGood}
       />
-    </div>
+    </>
   )
 }
 
