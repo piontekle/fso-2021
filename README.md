@@ -8,6 +8,10 @@ part0
   L FundamentalsOfWebApps
     L Exercises 0.4 - 0.6
 part1
-  Lcourseinfo
-    L Exercises 1.1 - 1.2
+  L courseinfo
+    L Exercises 1.1 - 1.5
+  L unicafe
+    L Exercises 1.6 - 1.11
+  L anecdotes
+    L Exercises 1.12 - 1.14
 ```
