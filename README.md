@@ -14,4 +14,7 @@ part1
     L Exercises 1.6 - 1.11
   L anecdotes
     L Exercises 1.12 - 1.14
+part2
+  L courseinfo_pt2
+    L Exercises 2.1 - 2.5
 ```
