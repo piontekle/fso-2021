@@ -17,4 +17,6 @@ part1
 part2
   L courseinfo_pt2
     L Exercises 2.1 - 2.5
+  L phonebook
+    L Exercises 2.6 - 2.10
 ```
