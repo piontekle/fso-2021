@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 
+const Header = ({ heading }) => <h2>{heading}</h2>
 
 const Contact = ({ name, number }) => (
   <li>{name} {number}</li>
@@ -25,10 +26,15 @@ const TextBox = ({ onChange, value }) => (
 
 const App = () => {
   const [ persons, setPersons ] = useState([
-    { name: 'Arto Hellas', number: '39-44-532523' }
+    { name: 'Arto Hellas', number: '040-123456' },
+    { name: 'Ada Lovelace', number: '39-44-5323523' },
+    { name: 'Dan Abramov', number: '12-43-234345' },
+    { name: 'Mary Poppendieck', number: '39-23-6423122' }
   ]);
   const [ newName, setNewName ] = useState('');
   const [ newNumber, setNewNumber ] = useState('');
+  const [ search, setSearch ] = useState('');
+  const [ filteredPersons, setFilteredPersons ] = useState([]);
 
   const resetState = () => {
     setNewName('');
@@ -54,9 +60,24 @@ const App = () => {
     }
   }
 
+  const handleSearch = (event) => {
+    const searchName = event.target.value;
+    setSearch(searchName);
+
+    const filteredNames = persons.filter(person =>
+      person.name.toLowerCase().startsWith(searchName.toLowerCase())
+    );
+
+    setFilteredPersons(filteredNames);
+  }
+
   return (
     <div>
-      <h2>Phonebook</h2>
+      <Header heading="Phonebook" />
+        <div>
+          filter shown with: <TextBox onChange={handleSearch} value={search} />
+        </div>
+      <Header heading="Add a new number" />
       <form onSubmit={handleSubmit}>
         <div>
           name: <TextBox onChange={handleNameChange} value={newName} />
@@ -68,8 +89,8 @@ const App = () => {
           <button type="submit">add</button>
         </div>
       </form>
-      <h2>Numbers</h2>
-        <Contacts contacts={persons} />
+      <Header heading="Numbers" />
+        <Contacts contacts={search.length ? filteredPersons : persons} />
     </div>
   )
 }
