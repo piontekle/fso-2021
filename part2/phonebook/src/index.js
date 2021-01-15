@@ -1,28 +1,11 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 
+import ContactForm from './components/ContactForm';
+import Contacts from './components/Contacts';
+import Filter from './components/Filter';
+
 const Header = ({ heading }) => <h2>{heading}</h2>
-
-const Contact = ({ name, number }) => (
-  <li>{name} {number}</li>
-)
-const Contacts = ({ contacts }) => (
-  <ul>
-    {
-      contacts.map(contact => (
-        <Contact
-          key={contact.name}
-          name={contact.name}
-          number={contact.number}
-        />
-      ))
-    }
-  </ul>
-)
-
-const TextBox = ({ onChange, value }) => (
-  <input onChange={onChange} value={value} />
-)
 
 const App = () => {
   const [ persons, setPersons ] = useState([
@@ -74,23 +57,17 @@ const App = () => {
   return (
     <div>
       <Header heading="Phonebook" />
-        <div>
-          filter shown with: <TextBox onChange={handleSearch} value={search} />
-        </div>
+      <Filter onSearch={handleSearch} value={search} />
       <Header heading="Add a new number" />
-      <form onSubmit={handleSubmit}>
-        <div>
-          name: <TextBox onChange={handleNameChange} value={newName} />
-        </div>
-        <div>
-          number: <TextBox onChange={handleNumberChange} value={newNumber} />
-        </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
+      <ContactForm
+        onSubmit={handleSubmit}
+        onNameChange={handleNameChange}
+        name={newName}
+        onNumberChange={handleNumberChange}
+        number={newNumber}
+      />
       <Header heading="Numbers" />
-        <Contacts contacts={search.length ? filteredPersons : persons} />
+      <Contacts contacts={search.length ? filteredPersons : persons} />
     </div>
   )
 }
