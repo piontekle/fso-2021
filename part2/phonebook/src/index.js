@@ -30,8 +30,13 @@ const App = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    setPersons(persons.concat({ name: newName}));
-    setNewName('');
+    const nameConflict = persons.find(person => person.name === newName);
+
+    if (nameConflict) alert(`${name} has already been added`);
+    else {
+      setPersons(persons.concat({ name: newName}));
+      setNewName('');
+    }
   }
 
   return (
