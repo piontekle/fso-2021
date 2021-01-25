@@ -19,4 +19,6 @@ part2
     L Exercises 2.1 - 2.5
   L phonebook
     L Exercises 2.6 - 2.11
+  L countries
+    L Exercises 2.12 -
 ```
