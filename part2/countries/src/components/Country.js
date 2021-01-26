@@ -40,13 +40,9 @@ const Country = ({ country }) => {
         </ul>
       <img src={flag} alt="country flag"/>
       <h3>Weather in {capital}</h3>
-      { weather.current && (
-        <>
-          <div><b>temperature:</b> {weather.current.temperature} {isUS ? "Fahrenheit" : "Celsius"} </div>
-          <img alt="capital weather" src={weather.current.weather_icons?.[0]} />
-          <div><b>wind:</b> {windStr}</div>
-        </>
-      )}
+      <div><b>temperature:</b> {weather.current?.temperature} {isUS ? "Fahrenheit" : "Celsius"} </div>
+      <img alt="capital weather" src={weather.current?.weather_icons?.[0]} />
+      <div><b>wind:</b> {windStr}</div>
     </div>
   );
 }
