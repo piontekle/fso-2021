@@ -28,7 +28,7 @@ const App = () => {
       country.name.toLowerCase().includes(newSearch.toLowerCase())
     );
 
-    if (filter.length > 1) {
+    if (!filter.length || filter.length > 1) {
       setResults(filter);
       setShowCountry(false);
     } else {
