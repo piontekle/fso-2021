@@ -9,6 +9,8 @@ const App = () => {
   const [search, setSearch] = useState('');
   const [countries, setCountries] = useState([]);
   const [results, setResults] = useState([]);
+  const [country, setCountry] = useState({});
+  const [showCountry, setShowCountry] = useState(false);
 
   useEffect(() => {
     axios
@@ -25,8 +27,19 @@ const App = () => {
     const filter = countries.filter(country =>
       country.name.toLowerCase().includes(newSearch.toLowerCase())
     );
-    console.log(filter)
-    setResults(filter);
+
+    if (filter.length > 1) {
+      setResults(filter);
+      setShowCountry(false);
+    } else {
+      setCountry(filter[0]);
+      setShowCountry(true);
+    }
+  }
+
+  const onClickShow = (country) => {
+    setCountry(country);
+    setShowCountry(true);
   }
 
   return (
@@ -41,9 +54,12 @@ const App = () => {
           ? "No results"
           : results.length > 10
             ? "Too many matches, specify another filter"
-            : results.length > 1
-              ? <CountryList countries={results} />
-              : <Country country={results[0]} />
+            : !showCountry
+              ? <CountryList
+                  countries={results}
+                  onClickShow={onClickShow}
+                />
+              : <Country country={country} />
 
       }
     </div>

@@ -1,10 +1,17 @@
 import React from 'react';
 
-const CountryList = ({ countries }) => (
+import Button from './Button';
+
+const CountryList = ({ countries, onClickShow }) => (
   <ul style={{listStyleType:"none"}}>
     {
       countries.map(country => {
-        return <li key={country.name}>{country.name}</li>
+        return (
+          <li key={country.name}>
+            {`${country.name}  `}
+            <Button label="show" onClick={() => onClickShow(country)} />
+          </li>
+        )
       })
     }
   </ul>
