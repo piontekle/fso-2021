@@ -1,6 +1,7 @@
 import React from 'react';
 
 import TextBox from './TextBox';
+import Button from './Button';
 
 const ContactForm = ({
   onSubmit,
@@ -17,7 +18,7 @@ const ContactForm = ({
       number: <TextBox onChange={onNumberChange} value={number} />
     </div>
     <div>
-      <button type="submit">add</button>
+      <Button type="submit" label="add" />
     </div>
   </form>
 )

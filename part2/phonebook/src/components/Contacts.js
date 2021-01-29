@@ -1,17 +1,21 @@
 import React from 'react';
 
+import Button from './Button';
+
 const Contact = ({ name, number }) => (
   <li>{name} {number}</li>
 )
-const Contacts = ({ contacts }) => (
+const Contacts = ({ contacts, handleDelete }) => (
   <ul>
     { contacts.length ? (
         contacts.map(contact => (
-          <Contact
-            key={contact.name}
-            name={contact.name}
-            number={contact.number}
-          />
+          <React.Fragment key={contact.id}>
+            <Contact
+              name={contact.name}
+              number={contact.number}
+            />
+            <Button label="delete" onClick={() => handleDelete(contact)}  />
+          </React.Fragment>
         ))
       ) : <div>No contacts found</div>
     }

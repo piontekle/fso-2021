@@ -27,15 +27,15 @@ const App = () => {
     setNewNumber('');
   }
 
-  const handleNameChange = (event) => {
+  const handleNameChange = event => {
     setNewName(event.target.value);
   }
 
-  const handleNumberChange = (event) => {
+  const handleNumberChange = event => {
     setNewNumber(event.target.value);
   }
 
-  const handleSubmit = (event) => {
+  const handleSubmit = event => {
     event.preventDefault();
     const nameConflict = persons.find(person => person.name === newName);
 
@@ -44,14 +44,14 @@ const App = () => {
       const newPerson = { name: newName, number: newNumber }
       personsService.create(newPerson)
         .then(person => {
-          setPersons(persons.concat(persons));
+          setPersons(persons.concat(person));
           resetState();
         })
         .catch(err => console.log(err))
     }
   }
 
-  const handleSearch = (event) => {
+  const handleSearch = event => {
     const searchName = event.target.value;
     setSearch(searchName);
 
@@ -60,6 +60,17 @@ const App = () => {
     );
 
     setFilteredPersons(filteredNames);
+  }
+
+  const handleDelete = contact => {
+    if (window.confirm(`Are you sure you want to delete ${contact.name}?`)) {
+      personsService.remove(contact.id)
+        .then(res => {
+          const newPersons = persons.filter(person => person.id !== contact.id);
+          setPersons(newPersons);
+        })
+        .catch(err => console.log(err));
+    }
   }
 
   return (
@@ -75,7 +86,10 @@ const App = () => {
         number={newNumber}
       />
       <Header heading="Numbers" />
-      <Contacts contacts={search.length ? filteredPersons : persons} />
+      <Contacts
+        contacts={search.length ? filteredPersons : persons}
+        handleDelete={handleDelete}
+      />
     </div>
   )
 }
