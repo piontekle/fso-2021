@@ -1,4 +1,4 @@
-# Fullstack Open Exercises Part 2c (2.12 - ) Countries
+# Fullstack Open Exercises Part 2c (2.12 - 2.14) Countries
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 

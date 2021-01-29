@@ -1,4 +1,4 @@
-# Fullstack Open Exercises Part 2b-c (2.6 - 2.11) Phonebook
+# Fullstack Open Exercises Part 2b-c (2.6 - 2.11, 2.15 - ) Phonebook
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
