@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+
+import personsService from '../services/persons';
 
 import ContactForm from './ContactForm';
 import Contacts from './Contacts';
@@ -15,10 +16,9 @@ const App = () => {
   const [ filteredPersons, setFilteredPersons ] = useState([]);
 
   useEffect(() => {
-    axios
-      .get('http://localhost:3001/persons')
-      .then(res => {
-        setPersons(res.data);
+    personsService.getAll()
+      .then(persons => {
+        setPersons(persons);
       });
   }, []);
 
@@ -42,10 +42,9 @@ const App = () => {
     if (nameConflict) alert(`${newName} has already been added`);
     else {
       const newPerson = { name: newName, number: newNumber }
-      axios
-        .post('http://localhost:3001/persons', newPerson)
-        .then(res => {
-          setPersons(persons.concat(res.data));
+      personsService.create(newPerson)
+        .then(person => {
+          setPersons(persons.concat(persons));
           resetState();
         })
         .catch(err => console.log(err))
