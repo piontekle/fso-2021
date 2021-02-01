@@ -18,7 +18,7 @@ part2
   L courseinfo_pt2
     L Exercises 2.1 - 2.5
   L phonebook
-    L Exercises 2.6 - 2.11, 2.15 - 
+    L Exercises 2.6 - 2.11, 2.15 - 2.18
   L countries
     L Exercises 2.12 - 2.14
 ```

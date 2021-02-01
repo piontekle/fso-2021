@@ -37,18 +37,30 @@ const App = () => {
 
   const handleSubmit = event => {
     event.preventDefault();
-    const nameConflict = persons.find(person => person.name === newName);
+    const personExists = persons.find(person =>
+      person.name.toLowerCase() === newName.toLowerCase()
+    );
 
-    if (nameConflict) alert(`${newName} has already been added`);
-    else {
-      const newPerson = { name: newName, number: newNumber }
+    if (
+      personExists &&
+      window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)
+    ) {
+      const updatedPerson = {...personExists, number: newNumber };
+      personsService.update(updatedPerson)
+        .then(updated => {
+          const newPersons = persons.filter(person => person.id !== updated.id)
+          setPersons(newPersons.concat(updated))
+        })
+    } else {
+      const newPerson = { name: newName, number: newNumber };
       personsService.create(newPerson)
         .then(person => {
           setPersons(persons.concat(person));
-          resetState();
         })
         .catch(err => console.log(err))
     }
+
+    resetState();
   }
 
   const handleSearch = event => {
