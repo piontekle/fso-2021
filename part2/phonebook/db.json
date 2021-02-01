@@ -2,7 +2,7 @@
   "persons": [
     {
       "name": "Arto Hellas",
-      "number": "999-999-999",
+      "number": "222222222",
       "id": 1
     },
     {
@@ -22,8 +22,18 @@
     },
     {
       "name": "ted",
-      "number": "111",
+      "number": "123-456-7890",
       "id": 5
+    },
+    {
+      "name": "Pooh Bear",
+      "number": "222-222",
+      "id": 6
+    },
+    {
+      "name": "Boo",
+      "number": "9999",
+      "id": 7
     }
   ]
 }
