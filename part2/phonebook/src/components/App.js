@@ -64,6 +64,10 @@ const App = () => {
           setPersons(newPersons.concat(updated))
           setNotification('success', `${updated.name} successfully updated`);
         })
+        .catch(err => {
+          console.log(err)
+          setNotification('error', `${updatedPerson.name} has already been removed from server`);
+        })
     } else {
       const newPerson = { name: newName, number: newNumber };
       personsService.create(newPerson)
@@ -71,7 +75,10 @@ const App = () => {
           setPersons(persons.concat(person));
           setNotification('success', `${person.name} successfully added`);
         })
-        .catch(err => console.log(err))
+        .catch(err => {
+          setNotification('error', `There was an error adding ${newPerson.name}`);
+          console.log(err)
+        })
     }
 
     resetState();
@@ -97,8 +104,13 @@ const App = () => {
           setPersons(newPersons);
           setNotification('success', `${contact.name} successfully removed`);
         })
-        .catch(err => console.log(err));
+        .catch(err => {
+          setNotification('error', `There was an error removing ${contact.name}`);
+          console.log(err)
+        });
     }
+
+    setTimeout(() => resetNotification(), 5000);
   }
 
   return (
