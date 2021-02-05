@@ -51,6 +51,10 @@ Ex:
 }
 ```
 
+DELETE `/:id`
+
+Deletes person with id, returns updated list of persons
+
 GET `/info`
 
 Returns summary of site information
