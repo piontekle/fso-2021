@@ -16,7 +16,9 @@ To start the server in development mode. It will automatically restart when chan
 
 ## Routes
 
-GET `/api/persons`
+### `/api/persons`
+
+GET `/`
 
 Returns list of contacts
 
@@ -34,6 +36,19 @@ Ex:
     id: 2
   }
 ]
+```
+
+GET `/:id`
+
+Returns requested person
+
+Ex:
+```
+{
+  name: "Arto Hellas",
+  number: "040-123456",
+  id: 1
+}
 ```
 
 GET `/info`
