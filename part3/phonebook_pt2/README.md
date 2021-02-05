@@ -13,3 +13,29 @@ To start the server. Go to `http://localhost:3001` to see any response from the 
 ### `npm run dev`
 
 To start the server in development mode. It will automatically restart when changes are saved.
+
+## Routes
+
+GET `/api/persons`
+
+Returns list of contacts
+
+Ex:
+```
+[
+  {
+    name: "Arto Hellas",
+    number: "040-123456",
+    id: 1
+  },
+  {
+    name: "Ada Lovelace",
+    number: "39-44-5323523",
+    id: 2
+  }
+]
+```
+
+GET `/info`
+
+Returns summary of site information
