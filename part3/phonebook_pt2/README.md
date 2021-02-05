@@ -51,9 +51,30 @@ Ex:
 }
 ```
 
+POST `/`
+
+Requires name, number. Creates a new contact, returns new contact
+
+Request ex:
+```
+{
+  "name": "Terry Jefferds",
+  "number": "999-999-9999"
+}
+```
+
+Response ex:
+```
+{
+  "name": "Terry Jefferds",
+  "number": "999-999-9999",
+  "id": 99
+}
+```
+
 DELETE `/:id`
 
-Deletes person with id, returns updated list of persons
+Deletes person with id, returns status ok
 
 GET `/info`
 
