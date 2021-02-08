@@ -43,7 +43,7 @@ const validatePerson = (newPerson) => {
 }
 
 morgan.token('body', (req, res) => JSON.stringify(req.body));
-app.use(morgan(':method :url :status - :response-time ms :body'));
+app.use(morgan(':method :url :status :res[content-length] - :response-time ms :body'));
 app.use(express.json())
 
 app.get('/', (request, response) => {
@@ -73,7 +73,7 @@ app.get('/api/persons/:id', (request, response) => {
 
 app.delete('/api/persons/:id', (request, response) => {
   const id = parseInt(request.params.id);
-  const updatedPersons = persons.filter(person => person.id !== id);
+  const persons = persons.filter(person => person.id !== id);
 
   response.status(200).send({ status: 'ok' });
 });

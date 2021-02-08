@@ -12,6 +12,22 @@ Since `http` can get cumbersome, enter the `Express` library for building our se
 
 We want the app to be RESTful. Representational State Transfer is an architectural style for scalable web applications. OK, what does that mean? Every resource (data, etc.) has a unique URL associated with it, allowing for consistent representation of interfaces (what's happening between frontend & backend). We go over sending/receiving data from the server.
 
+**HTTP Request Types**
+
+Definitions:
+ - safe: does not have any side effects on the server
+ - idempotent: side effects of N>0 identical requests are the same as a single request (i.e. 10 requests have the same side effects as 1 request)
+
+
+GET - retrieve data, safe and indempotent\
+POST - send data to server, replacing for update\
+PUT - send data to server, updating a record, indempotent\
+DELETE - delete data from server, indempotent
+
+**Middleware:** functions used to handle request and response objects\
+Ex: `json-parser` takes the raw data from the request, parses it into JS, and assigns it to the request (`body`)
+
+
 **Other Resources:**
 - [Semantic Versioning](https://docs.npmjs.com/about-semantic-versioning)
 - [Node REPL](https://nodejs.org/docs/latest-v8.x/api/repl.html)
