@@ -1,7 +1,7 @@
 const express = require('express');
-const app = express();
+const morgan = require('morgan');
 
-app.use(express.json())
+const app = express();
 
 let persons = [
   {
@@ -42,6 +42,10 @@ const validatePerson = (newPerson) => {
   return "ok";
 }
 
+morgan.token('body', (req, res) => JSON.stringify(req.body));
+app.use(morgan(':method :url :status - :response-time ms :body'));
+app.use(express.json())
+
 app.get('/', (request, response) => {
   response.send('<h1>Hello World!</h1>')
 });
@@ -80,11 +84,12 @@ app.post('/api/persons', (request, response) => {
 
   if (valid === "ok") {
     newPerson.id = generateID();
-    persons.concat(newPerson);
+    persons = persons.concat(newPerson);
 
     response.status(200).json(newPerson);
+  } else {
+    response.status(500).json({ err: valid });
   }
-  response.status(500).json({ err: valid });
 })
 
 const PORT = 3001;
