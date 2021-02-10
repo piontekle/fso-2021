@@ -1,6 +1,6 @@
 # Fullstack Open Part 3
 
-
+**phoneboo_pt2:** Exercises 3.1 -
 
 ## Section Summary
 
@@ -27,7 +27,25 @@ DELETE - delete data from server, indempotent
 **Middleware:** functions used to handle request and response objects\
 Ex: `json-parser` takes the raw data from the request, parses it into JS, and assigns it to the request (`body`)
 
-
 **Other Resources:**
 - [Semantic Versioning](https://docs.npmjs.com/about-semantic-versioning)
 - [Node REPL](https://nodejs.org/docs/latest-v8.x/api/repl.html)
+
+### Deploying to the Internet
+
+CORS: Cross-origin resource sharing (CORS) is a mechanism that allows restricted resources (e.g. fonts) on a web page to be requested from another domain outside the domain from which the first resource was served. A web page may freely embed cross-origin images, stylesheets, scripts, iframes, and videos. Certain "cross-domain" requests, notably Ajax requests, are forbidden by default by the same-origin security policy (i.e. by default browser only communicates with servers of the same origin) [Mozilla CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS)
+
+Enter [Heroku](https://devcenter.heroku.com/articles/getting-started-with-nodejs) for deployment. Create and push the app according to the docs. Then for the frontend, we need to run `npm run build` to get the production build of our frontend app. In order to use the frontend, we copy the build to the root directory of the backend app. This means every time there's a change in the frontend, we need to rebuild & copy the build to the backend. To streamline, add these scripts to `package.json`:
+
+```
+"scripts": {
+  //...
+  "build:ui": "rm -rf build && cd ../../osa2/materiaali/notes-new && npm run build --prod && cp -r build ../../../osa3/notes-backend/",
+  "deploy": "git push heroku main",
+  "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && npm run deploy",    
+  "logs:prod": "heroku logs --tail"
+}
+```
+
+**Other Resources:**
+- [Deployment Pipeline](https://martinfowler.com/bliki/DeploymentPipeline.html)

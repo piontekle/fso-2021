@@ -76,6 +76,8 @@ DELETE `/:id`
 
 Deletes person with id, returns status ok
 
-GET `/info`
+### `/info`
+
+GET `/`
 
 Returns summary of site information

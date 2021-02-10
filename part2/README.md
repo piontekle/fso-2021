@@ -28,9 +28,9 @@ Three states of promises:
 3. **rejected:** error prevented final value from being unavailable
 
 **Other resources:**
-[What the Heck is the Event Loop Anyway?](https://www.youtube.com/watch?v=8aGhZQkoFbQ)
-[Web Works](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers)
-[Single Thread Web Browser](https://medium.com/techtrument/multithreading-javascript-46156179cf9a)
+- [What the Heck is the Event Loop Anyway?](https://www.youtube.com/watch?v=8aGhZQkoFbQ)
+- [Web Workers](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers)
+- [Single Thread Web Browser](https://medium.com/techtrument/multithreading-javascript-46156179cf9a)
 
 Another React hook, `useEffect` is introduced. This hook is triggered by change in state, or if you just want to trigger something on initial render, add an empty array `[]`.
 

@@ -17,8 +17,8 @@ Part 1 starts with brief introduction of React and the all-important `create-rea
 Following was an intro to JavaScript (not Java), getting the basic data types and declarations. Coming together with our React learning, the focus is on Classes and Objects. Functional components are more efficient and powered by React hooks, but it's good to have that background (some of the debate is here)[https://github.com/petsel/not-awesome-es6-classes]. We cleaned up our `courseinfo` app with our new JS knowledge.
 
 **Other Resources:**
-- (Re-introduction to JavaScript)[https://developer.mozilla.org/en-US/docs/Web/JavaScript/A_re-introduction_to_JavaScript] (all hail Mozilla)
-- (You Don't Know JS Series)[https://github.com/getify/You-Dont-Know-JS]
+- [Re-introduction to JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript/A_re-introduction_to_JavaScript) (all hail Mozilla)
+- [You Don't Know JS Series](https://github.com/getify/You-Dont-Know-JS)
 
 ### Component state, event handlers
 
