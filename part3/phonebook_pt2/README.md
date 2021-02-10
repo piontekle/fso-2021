@@ -14,6 +14,28 @@ To start the server. Go to `http://localhost:3001` to see any response from the 
 
 To start the server in development mode. It will automatically restart when changes are saved.
 
+### `npm run build:ui`
+
+Build `phonebook` frontend app and copy its build to the root directory.
+
+### `npm run deploy`
+
+After building, push code to the deployment.
+
+### `npm run deploy:full`
+
+Runs build and deploy scripts.
+
+### `npm run logs:prod`
+
+Display the deployment logs in real time.
+
+## Deployment
+
+After deploying, find the [Heroku](https://devcenter.heroku.com/articles/getting-started-with-nodejs) app at:
+
+https://tranquil-river-04148.herokuapp.com/
+
 ## Routes
 
 ### `/api/persons`
