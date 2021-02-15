@@ -49,3 +49,7 @@ Enter [Heroku](https://devcenter.heroku.com/articles/getting-started-with-nodejs
 
 **Other Resources:**
 - [Deployment Pipeline](https://martinfowler.com/bliki/DeploymentPipeline.html)
+
+### Saving data to MongoDB
+
+MongoDB is a NoSQL document based database (vs. relational). They use [collections](https://docs.mongodb.com/manual/core/databases-and-collections/) and [documents](https://docs.mongodb.com/manual/core/document/). 
