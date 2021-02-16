@@ -52,4 +52,6 @@ Enter [Heroku](https://devcenter.heroku.com/articles/getting-started-with-nodejs
 
 ### Saving data to MongoDB
 
-MongoDB is a NoSQL document based database (vs. relational). They use [collections](https://docs.mongodb.com/manual/core/databases-and-collections/) and [documents](https://docs.mongodb.com/manual/core/document/). 
+MongoDB is a NoSQL document based database (vs. relational). They use [collections](https://docs.mongodb.com/manual/core/databases-and-collections/) and [documents](https://docs.mongodb.com/manual/core/document/).
+
+We created our database with a user and network access to anywhere IP address-wise, and get our connection URI. Then go over creating a schema and saving new objects (`new()` and `.save`). Review `find({})` to retrieve all documents or filling the brackets with attributes to filter.
