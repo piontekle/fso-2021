@@ -15,34 +15,41 @@ app.get('/', (request, response) => {
   response.send('<h1>Hello World!</h1>')
 });
 
-app.get('/info', (request, response) => {
-  const total = persons.length
-  const date = new Date();
+app.get('/info', (request, response, next) => {
+  Person.find({})
+    .then(persons => {
+      const date = new Date();
 
-  response.send(`<div>Phonebook has info for ${total} people</div><div>${date}</div>`)
+      response.send(`<div>Phonebook has info for ${persons.length} people</div><div>${date}</div>`)
+    })
+    .catch(err => next(err));
 })
 
 app.get('/api/persons', (request, response) => {
   Person.find({}).then(persons => {
     response.json(persons);
   })
+  .catch(err => next(err));
 });
 
 app.get('/api/persons/:id', (request, response) => {
-  const id = parseInt(request.params.id);
-  const person = Person.findById(id);
-
-  if (person) {
-    response.status(200).json(person);
-  }
-  response.status(404).send('Person not found');
+  Person.findById(request.params.id)
+    .then(person => {
+      if (person) {
+        response.json(person);
+      } else {
+        response.status(404).end();
+      }
+    })
+    .catch(err => next(err));
 });
 
 app.delete('/api/persons/:id', (request, response) => {
-  const id = parseInt(request.params.id);
-  persons = persons.filter(person => person.id !== id);
-
-  response.status(200).send({ status: 'ok' });
+  Person.findByIdAndRemove(request.params.id)
+    .then(res => {
+      response.status(204).end();
+    })
+    .catch(err => next(err));
 });
 
 app.post('/api/persons', (request, response) => {
@@ -60,7 +67,35 @@ app.post('/api/persons', (request, response) => {
   person.save().then(newPerson => {
     response.json(newPerson)
   })
+  .catch(err => next(err))
 });
+
+app.put('/api/persons/:id', (request, response, next) => {
+  const body = request.body;
+
+  const person = {
+    name: body.name,
+    number: body.number,
+  }
+
+  Person.findByIdAndUpdate(request.params.id, person, { new: true })
+    .then(updatedPerson => {
+      response.json(updatedPerson);
+    })
+    .catch(err => next(err));
+});
+
+const errorHandler = (error, request, response, next) => {
+  console.error(error.message)
+
+  if (error.name === 'CastError') {
+    return response.status(400).send({ error: 'malformatted id' })
+  }
+
+  next(error);
+}
+
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
