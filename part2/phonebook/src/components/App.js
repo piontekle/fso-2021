@@ -66,7 +66,7 @@ const App = () => {
         })
         .catch(err => {
           console.log(err)
-          setNotification('error', `${updatedPerson.name} has already been removed from server`);
+          setNotification('error', err.response.data.error);
         })
     } else {
       const newPerson = { name: newName, number: newNumber };
@@ -76,8 +76,8 @@ const App = () => {
           setNotification('success', `${person.name} successfully added`);
         })
         .catch(err => {
-          setNotification('error', `There was an error adding ${newPerson.name}`);
-          console.log(err)
+          console.log(err.response)
+          setNotification('error', err.response.data.error);
         })
     }
 
@@ -105,7 +105,7 @@ const App = () => {
           setNotification('success', `${contact.name} successfully removed`);
         })
         .catch(err => {
-          setNotification('error', `There was an error removing ${contact.name}`);
+          setNotification('error', err.response.data.error);
           console.log(err)
         });
     }
