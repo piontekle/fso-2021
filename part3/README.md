@@ -55,3 +55,7 @@ Enter [Heroku](https://devcenter.heroku.com/articles/getting-started-with-nodejs
 MongoDB is a NoSQL document based database (vs. relational). They use [collections](https://docs.mongodb.com/manual/core/databases-and-collections/) and [documents](https://docs.mongodb.com/manual/core/document/).
 
 We created our database with a user and network access to anywhere IP address-wise, and get our connection URI. Then go over creating a schema and saving new objects (`new()` and `.save`). Review `find({})` to retrieve all documents or filling the brackets with attributes to filter.
+
+We covered error handling, using `next(error)` to forward the error along to am iddleware error handler we created. Then covered deleting and updating. Another important note is paying attention to the order of our Middleware. The `.use(json)` has to be before all our requests in order for them to be parsed correctly, for example. And the error handler and unknown routes should be close to last. They're called in the order they're coded.
+
+### Validation and ESLint

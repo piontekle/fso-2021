@@ -52,7 +52,7 @@ app.delete('/api/persons/:id', (request, response) => {
     .catch(err => next(err));
 });
 
-app.post('/api/persons', (request, response) => {
+app.post('/api/persons', (request, response, next) => {
   const body = request.body;
 
   if (body.name === undefined || body.number === undefined) {
@@ -78,7 +78,11 @@ app.put('/api/persons/:id', (request, response, next) => {
     number: body.number,
   }
 
-  Person.findByIdAndUpdate(request.params.id, person, { new: true })
+  Person.findByIdAndUpdate(
+    request.params.id,
+    person, { new: true },
+    { runValidators: true, context: 'query' }
+  )
     .then(updatedPerson => {
       response.json(updatedPerson);
     })
