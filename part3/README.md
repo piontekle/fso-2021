@@ -59,3 +59,13 @@ We created our database with a user and network access to anywhere IP address-wi
 We covered error handling, using `next(error)` to forward the error along to am iddleware error handler we created. Then covered deleting and updating. Another important note is paying attention to the order of our Middleware. The `.use(json)` has to be before all our requests in order for them to be parsed correctly, for example. And the error handler and unknown routes should be close to last. They're called in the order they're coded.
 
 ### Validation and ESLint
+
+In order to ensure our DB entries have the correct information, we can use the Mongoose validation in our schema. Wrap that all together and get that deployed.
+
+Last but not least, we covered linting and using ESLint to keep our code good looking and consistent. After installing, initialize with
+
+```
+node_modules/.bin/eslint --init
+```
+
+...and answer the questions.
