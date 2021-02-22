@@ -95,13 +95,13 @@ Response ex:
 ```
 PUT `/:id`
 
-Requires name (at least 3 characters), number (at least 8 digits). Creates a new contact, returns new contact
+Requires same name as intended contact, with new number. Creates a new contact, returns new contact
 
 Request ex:
 ```
 {
-  "name": "Terrance Jefferds",
-  "number": "999-999-9999"
+  "name": "Terry Jefferds",
+  "number": "99-99-9999"
 }
 ```
 
@@ -109,7 +109,7 @@ Response ex:
 ```
 {
   "name": "Terrance Jefferds",
-  "number": "999-999-9999",
+  "number": "99-99-9999",
   "id": 99
 }
 ```
