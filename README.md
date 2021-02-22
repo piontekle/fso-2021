@@ -23,5 +23,5 @@ part2
     L Exercises 2.12 - 2.14
 part3
   L phonebook_pt2
-    L Exercises 3.1 -
+    L Exercises 3.1 - 3.22
 ```

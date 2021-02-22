@@ -1,6 +1,6 @@
 # Fullstack Open Part 3
 
-**phoneboo_pt2:** Exercises 3.1 -
+**phoneboo_pt2:** Exercises 3.1 - 3.22
 
 ## Section Summary
 
@@ -68,4 +68,4 @@ Last but not least, we covered linting and using ESLint to keep our code good lo
 node_modules/.bin/eslint --init
 ```
 
-...and answer the questions.
+...and answer the questions. Then add the `eslint .` script and fix the errors. Pretty straight forward.

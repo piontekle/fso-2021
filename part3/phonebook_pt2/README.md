@@ -1,4 +1,4 @@
-# Fullstack Open Exercises Part 3a (3.1 - ) Phonebook Pt 2 - Backend
+# Fullstack Open Exercises Part 3a (3.1 - 3.22) Phonebook Pt 2 - Backend
 
 Backend application built with Node and Express to RESTfully serve book of contacts.
 
@@ -75,7 +75,7 @@ Ex:
 
 POST `/`
 
-Requires name, number. Creates a new contact, returns new contact
+Requires name (at least 3 characters), number (at least 8 digits). Creates a new contact, returns new contact
 
 Request ex:
 ```
@@ -89,6 +89,26 @@ Response ex:
 ```
 {
   "name": "Terry Jefferds",
+  "number": "999-999-9999",
+  "id": 99
+}
+```
+PUT `/:id`
+
+Requires name (at least 3 characters), number (at least 8 digits). Creates a new contact, returns new contact
+
+Request ex:
+```
+{
+  "name": "Terrance Jefferds",
+  "number": "999-999-9999"
+}
+```
+
+Response ex:
+```
+{
+  "name": "Terrance Jefferds",
   "number": "999-999-9999",
   "id": 99
 }
