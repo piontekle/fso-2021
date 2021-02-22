@@ -1,6 +1,6 @@
 # Fullstack Open Part 3
 
-**phoneboo_pt2:** Exercises 3.1 - 3.22
+**phonebook_pt2:** Exercises 3.1 - 3.22
 
 ## Section Summary
 

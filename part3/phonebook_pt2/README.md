@@ -108,7 +108,7 @@ Request ex:
 Response ex:
 ```
 {
-  "name": "Terrance Jefferds",
+  "name": "Terry Jefferds",
   "number": "99-99-9999",
   "id": 99
 }
