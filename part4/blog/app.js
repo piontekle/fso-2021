@@ -8,7 +8,7 @@ const logger = require('./utils/logger')
 const config = require('./utils/config').config
 const middleware = require('./utils/middleware')
 
-const blogsRouter = require('./controllers/blogs')
+const blogListsRouter = require('./controllers/blogLists')
 
 // Connect to MONGODB
 logger.info('Connecting to', config.mongodb.NAME)
@@ -21,7 +21,7 @@ app.use(cors())
 app.use(express.json())
 app.use(middleware.requestLogger)
 
-app.use('/api/blogs', blogsRouter)
+app.use('/api/lists', blogListsRouter)
 
 app.use(middleware.unknownEndpoint)
 app.use(middleware.errorHandler)

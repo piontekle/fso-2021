@@ -24,7 +24,7 @@ TBD
 
 ## Routes
 
-### `/api/blogs`
+### `/api/lists`
 
 GET `/`
 
