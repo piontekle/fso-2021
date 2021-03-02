@@ -1,6 +1,3 @@
-const logger = require('../utils/logger')
-const config = require('../utils/config').config
-
 const blogListsRouter = require('express').Router()
 const BlogList = require('../models/blogList')
 
@@ -13,7 +10,7 @@ blogListsRouter.get('/', (request, response, next) => {
     .catch(err => next(err))
 })
 
-blogListsRouter.post('/', (request, response) => {
+blogListsRouter.post('/', (request, response, next) => {
   const blog = new BlogList(request.body)
 
   blog
