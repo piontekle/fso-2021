@@ -1,9 +1,14 @@
 require('dotenv').config()
 
+const MONGODB_URI = process.env.NODE_ENV === 'test'
+  ? process.env.TEST_DB_URI
+  : process.env.DB_URI
+
 const config = {
-  PORT: process.env.PORT || 3001,
+  ENV: process.env.NODE_ENV,
+  PORT: process.env.PORT,
   mongodb: {
-    URI: process.env.DB_URI,
+    URI: MONGODB_URI,
     NAME: process.env.DB_NAME
   }
 
