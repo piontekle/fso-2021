@@ -18,7 +18,7 @@ beforeEach(async () => {
 })
 
 describe('BlogLists', () => {
-  describe.only('/GET', () => {
+  describe('/GET', () => {
     test('blogLists are returned as json', async () => {
       await api
         .get(baseURL)
@@ -30,6 +30,13 @@ describe('BlogLists', () => {
       const res = await api.get(baseURL)
       expect(res.status).toBe(200)
       expect(res.body?.length).toBe(3)
+    })
+
+    test('unique identifier is named id', async () => {
+      const res = await api.get(baseURL)
+      expect(res.status).toBe(200)
+      expect(res.body?.[0].id).toBeDefined()
+      expect(res.body?.[0]._id).not.toBeDefined()
     })
   })
 })
