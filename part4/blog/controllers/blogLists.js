@@ -7,15 +7,17 @@ blogListsRouter.get('/', async (request, response) => {
 
 })
 
-blogListsRouter.post('/', (request, response, next) => {
-  const blog = new BlogList(request.body)
+blogListsRouter.post('/', async (request, response) => {
+  const { body } = request
+  const newBlog = new BlogList({
+    title: body.title,
+    author: body.author,
+    url: body.url,
+    likes: body.likes,
+  })
 
-  blog
-    .save()
-    .then(result => {
-      response.status(201).json(result)
-    })
-    .catch(err => next(err))
+  const savedBlog = await newBlog.save()
+  response.status(201).json(savedBlog)
 })
 
 module.exports = blogListsRouter

@@ -6,7 +6,7 @@ const api = supertest(app)
 const helper = require('./test_helpers')
 const BlogList = require('../models/blogList')
 
-const baseURL = '/api/lists/'
+const baseUrl = '/api/lists/'
 
 beforeEach(async () => {
   await BlogList.deleteMany({})
@@ -21,22 +21,40 @@ describe('BlogLists', () => {
   describe('/GET', () => {
     test('blogLists are returned as json', async () => {
       await api
-        .get(baseURL)
+        .get(baseUrl)
         .expect(200)
         .expect('Content-Type', /application\/json/)
     })
 
     test('returns the initial blog list', async () => {
-      const res = await api.get(baseURL)
+      const res = await api.get(baseUrl)
       expect(res.status).toBe(200)
-      expect(res.body?.length).toBe(3)
+      expect(res.body?.length).toBe(helper.moreBlogs.length)
     })
 
     test('unique identifier is named id', async () => {
-      const res = await api.get(baseURL)
+      const res = await api.get(baseUrl)
       expect(res.status).toBe(200)
       expect(res.body?.[0].id).toBeDefined()
       expect(res.body?.[0]._id).not.toBeDefined()
+    })
+  })
+
+  describe('/POST', () => {
+    test('a new blog is added to the list', async () => {
+      const newBlog = {
+        title: 'Programming is Good For the Soul',
+        author: 'The Fake PLizzle',
+        url: 'www.getfake.com/programming-good-soul',
+        likes: 321,
+      }
+
+      const res = await api.post(baseUrl).send(newBlog)
+      expect(res.status).toBe(201)
+      expect(res.body?.title).toBe('Programming is Good For the Soul')
+
+      const newList = await helper.blogsInDb()
+      expect(newList.length).toEqual(helper.moreBlogs.length + 1)
     })
   })
 })
