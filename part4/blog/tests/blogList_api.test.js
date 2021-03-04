@@ -82,17 +82,33 @@ describe('BlogLists', () => {
   })
 
   describe('/DELETE', () => {
-    test('deletes one note', async () => {
-      const blogList = await helper.blogsInDb()
-      const id = blogList[0].id
+    test('deletes one blog entry', async () => {
+      const existingId = await helper.getAnId();
 
       await api
-        .delete(baseUrl + id.toString())
+        .delete(baseUrl + existingId.toString())
         .expect(204)
 
       const newBlogList = await helper.blogsInDb()
       expect(newBlogList.length).toBe(helper.moreBlogs.length - 1)
     })
+  })
+})
+
+describe('/PUT', () => {
+  test('updates one blog', async () => {
+    const existingId = await helper.getAnId()
+    const updatedBlog = {
+      title: 'How to Update Go To Statement',
+      author: 'Edsger W. Dijkstra',
+      url: 'http://www.u.arizona.edu/~rubinson/copyright_violations/Go_To_Considered_Harmful.html',
+      likes: 345,
+    }
+
+    const response = await api.put(baseUrl + existingId).send(updatedBlog)
+    expect(response.status).toBe(200)
+    expect(response.body?.title).toBe('How to Update Go To Statement')
+    expect(response.body?.likes).toBe(345)
   })
 })
 

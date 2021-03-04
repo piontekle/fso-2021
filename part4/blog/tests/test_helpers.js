@@ -39,9 +39,15 @@ const blogsInDb = async () => {
   return blogList
 }
 
+const getAnId = async () => {
+  const blogList = await blogsInDb()
+  return blogList[0].id
+}
+
 module.exports = {
   emptyBlogs,
   oneBlog,
   moreBlogs,
   blogsInDb,
+  getAnId,
 }
