@@ -80,6 +80,20 @@ describe('BlogLists', () => {
       expect(res.status).toBe(400)
     })
   })
+
+  describe('/DELETE', () => {
+    test('deletes one note', async () => {
+      const blogList = await helper.blogsInDb()
+      const id = blogList[0].id
+
+      await api
+        .delete(baseUrl + id.toString())
+        .expect(204)
+
+      const newBlogList = await helper.blogsInDb()
+      expect(newBlogList.length).toBe(helper.moreBlogs.length - 1)
+    })
+  })
 })
 
 afterAll(() => {
