@@ -56,6 +56,19 @@ describe('BlogLists', () => {
       const newList = await helper.blogsInDb()
       expect(newList.length).toEqual(helper.moreBlogs.length + 1)
     })
+
+    test('likes defaults to 0', async () => {
+      const newBlog = {
+        title: 'Make Sure to Set Your Defaults',
+        author: 'D. Fault',
+        url: 'www.generic.com/set-defaults',
+      }
+
+      const res = await api.post(baseUrl).send(newBlog)
+      expect(res.status).toBe(201)
+      expect(res.body?.title).toBe('Make Sure to Set Your Defaults')
+      expect(res.body?.likes).toEqual(0)
+    })
   })
 })
 
