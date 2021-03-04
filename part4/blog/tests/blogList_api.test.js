@@ -58,16 +58,26 @@ describe('BlogLists', () => {
     })
 
     test('likes defaults to 0', async () => {
-      const newBlog = {
+      const newBlogNoLikes = {
         title: 'Make Sure to Set Your Defaults',
         author: 'D. Fault',
         url: 'www.generic.com/set-defaults',
       }
 
-      const res = await api.post(baseUrl).send(newBlog)
+      const res = await api.post(baseUrl).send(newBlogNoLikes)
       expect(res.status).toBe(201)
       expect(res.body?.title).toBe('Make Sure to Set Your Defaults')
       expect(res.body?.likes).toEqual(0)
+    })
+
+    test('blog entry without title or url fails', async () => {
+      const newBlogNoTitleNoUrl = {
+        author: 'D. Fault',
+        likes: 3
+      }
+
+      const res = await api.post(baseUrl).send(newBlogNoTitleNoUrl)
+      expect(res.status).toBe(400)
     })
   })
 })
