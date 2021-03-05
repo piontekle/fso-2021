@@ -83,7 +83,7 @@ describe('BlogLists', () => {
 
   describe('/DELETE', () => {
     test('deletes one blog entry', async () => {
-      const existingId = await helper.getAnId();
+      const existingId = await helper.getAnId()
 
       await api
         .delete(baseUrl + existingId.toString())
