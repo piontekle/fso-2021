@@ -83,7 +83,7 @@ describe('BlogLists', () => {
 
   describe('/DELETE', () => {
     test('deletes one blog entry', async () => {
-      const existingId = await helper.getAnId()
+      const existingId = await helper.getABlogId()
 
       await api
         .delete(baseUrl + existingId.toString())
@@ -96,7 +96,7 @@ describe('BlogLists', () => {
 
   describe('/PUT', () => {
     test('updates one blog', async () => {
-      const existingId = await helper.getAnId()
+      const existingId = await helper.getABlogId()
       const updatedBlog = {
         title: 'How to Update Go To Statement',
         author: 'Edsger W. Dijkstra',

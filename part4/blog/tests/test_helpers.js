@@ -1,5 +1,8 @@
 const BlogList = require('../models/blogList')
+const User = require('../models/User')
 
+
+// BlogList Helpers --------------------------------------
 const emptyBlogs = []
 const oneBlog = [
   {
@@ -39,9 +42,16 @@ const blogsInDb = async () => {
   return blogList
 }
 
-const getAnId = async () => {
+const getABlogId = async () => {
   const blogList = await blogsInDb()
   return blogList[0].id
+}
+
+// User Helpers --------------------------------------
+
+const usersInDb = async () => {
+  const users = await User.find({})
+  return users
 }
 
 module.exports = {
@@ -49,5 +59,6 @@ module.exports = {
   oneBlog,
   moreBlogs,
   blogsInDb,
-  getAnId,
+  getABlogId,
+  usersInDb,
 }
