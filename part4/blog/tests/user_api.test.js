@@ -63,6 +63,39 @@ describe('Users', () => {
         const usersAtEnd = await helper.usersInDb()
         expect(usersAtEnd).toHaveLength(usersAtStart.length)
       })
+
+      test('creation fails with proper status code & if username is less than 3', async () => {
+        const usersAtStart = await helper.usersInDb()
+
+        const newUser = {
+          username: 'ro',
+          name: 'Superuser',
+          password: 'salainen',
+        }
+
+        await api
+          .post(baseUrl)
+          .send(newUser)
+          .expect(400)
+        const usersAtEnd = await helper.usersInDb()
+        expect(usersAtEnd).toHaveLength(usersAtStart.length)
+      })
+
+      test('creation fails with proper status code & if password is missing', async () => {
+        const usersAtStart = await helper.usersInDb()
+
+        const newUser = {
+          username: 'ro',
+          name: 'Superuser',
+        }
+
+        await api
+          .post(baseUrl)
+          .send(newUser)
+          .expect(400)
+        const usersAtEnd = await helper.usersInDb()
+        expect(usersAtEnd).toHaveLength(usersAtStart.length)
+      })
     })
   })
 })

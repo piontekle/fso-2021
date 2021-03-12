@@ -15,24 +15,37 @@ usersRouter.get('/:id', async (request, response) => {
     .findById(id)
     .populate('blogLists', { title: 1, author: 1, url: 1, likes: 1 })
 
-  response.json(user)
+  if (user) {
+    response.json(user)
+  } else {
+    response.status(404).end()
+  }
 })
 
 usersRouter.post('/', async (request, response) => {
   const { username, name, password } = request?.body
 
-  const saltRounds = 10
-  const passwordHash = await bcrypt.hash(password, saltRounds)
+  if (
+    !username ||
+    !password ||
+    username.length < 3 ||
+    password.length < 3
+  ) {
+    response.status(400).send({ message: 'Missing or invalid input' }).end()
+  } else {
+    const saltRounds = 10
+    const passwordHash = await bcrypt.hash(password, saltRounds)
 
-  const user = new User({
-    username: username,
-    name: name,
-    passwordHash,
-  })
+    const user = new User({
+      username: username,
+      name: name,
+      passwordHash,
+    })
 
-  const savedUser = await user.save()
+    const savedUser = await user.save()
 
-  response.status(201).json(savedUser)
+    response.status(201).json(savedUser)
+  }
 })
 
 module.exports = usersRouter

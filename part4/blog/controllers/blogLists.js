@@ -52,7 +52,7 @@ blogListsRouter.post('/', async (request, response) => {
     await user.save()
     response.status(201).json(savedBlog)
   } else {
-    response.status(400).end()
+    response.status(400).send({ message: 'Missing or invalid input' }).end()
   }
 })
 
