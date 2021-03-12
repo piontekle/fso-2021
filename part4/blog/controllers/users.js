@@ -31,7 +31,7 @@ usersRouter.post('/', async (request, response) => {
     username.length < 3 ||
     password.length < 3
   ) {
-    response.status(400).send({ message: 'Missing or invalid input' }).end()
+    response.status(400).json({ error: 'Missing or invalid input' }).end()
   } else {
     const saltRounds = 10
     const passwordHash = await bcrypt.hash(password, saltRounds)
