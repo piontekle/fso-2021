@@ -40,3 +40,5 @@ We created and tested our `POST/` for our users endpoints and adjusted the code 
 ### Token Authentication
 
 Now to cover how a user will actually login - [token based authentication](https://scotch.io/tutorials/the-ins-and-outs-of-token-based-authentication#toc-how-token-based-works)! This is where a user logging in creates a token, the backend verifies it, and it's stored in state so the frontend knows the user is authenticated. To start, we installed `jsonwebtoken`. 
+
+After writing the initial login code, we decided the way we'd send tokens was with the Authorization Header. This can also communicate what authentication scheme will be used, in our case the Bearer schema.

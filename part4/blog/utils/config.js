@@ -5,13 +5,13 @@ const MONGODB_URI = process.env.NODE_ENV === 'test'
   : process.env.DB_URI
 
 const config = {
-  ENV: process.env.NODE_ENV,
-  PORT: process.env.PORT,
+  env: process.env.NODE_ENV,
+  port: process.env.PORT,
+  jwtSecret: process.env.JWT_SECRET,
   mongodb: {
-    URI: MONGODB_URI,
-    NAME: process.env.DB_NAME
+    uri: MONGODB_URI,
+    name: process.env.DB_NAME
   }
-
 }
 
 module.exports = {
