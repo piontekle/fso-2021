@@ -54,6 +54,17 @@ const usersInDb = async () => {
   return users
 }
 
+const createUser = async () => {
+  const user = User.create({
+    username: 'batman',
+    name: 'Bruce Wayne',
+    password: 'nanana'
+  })
+  await user.save()
+
+  return user
+}
+
 module.exports = {
   emptyBlogs,
   oneBlog,
@@ -61,4 +72,5 @@ module.exports = {
   blogsInDb,
   getABlogId,
   usersInDb,
+  createUser,
 }

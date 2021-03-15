@@ -21,7 +21,8 @@ describe('LOGIN', () => {
   test('logs in with correct credentials', async () => {
     const user = { username: 'root', password: 'sekret' }
 
-    await api.post(baseUrl).send(user).expect(200)
+    const res = await api.post(baseUrl).send(user).expect(200)
+    expect(res.body.token).not.toBe(undefined)
   })
 
   test('rejects if credentials are wrong', async () => {
