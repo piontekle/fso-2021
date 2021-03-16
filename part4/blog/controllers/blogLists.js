@@ -1,10 +1,19 @@
 const jwt = require('jsonwebtoken')
+const isEmpty = require('lodash/isEmpty')
 
 const config = require('../utils/config').config
 const blogListsRouter = require('express').Router()
 
 const BlogList = require('../models/blogList')
 const User = require('../models/user')
+
+const decodeToken = (token) => {
+  const decodedToken = jwt.verify(token, config.jwtSecret)
+  if (!token || !decodedToken.id) {
+    return null
+  }
+  return decodedToken.id
+}
 
 blogListsRouter.get('/', async (request, response) => {
   const blogList = await BlogList
@@ -24,8 +33,7 @@ blogListsRouter.get('/', async (request, response) => {
 blogListsRouter.post('/', async (request, response) => {
   const { title, author, url, likes, userId } = request?.body
   const { token } = request
-  const decodedToken = jwt.verify(token, config.jwtSecret)
-  if (!token || !decodedToken.id) {
+  if (!decodeToken(token)) {
     return response.status(401).json({ error: 'token missing or invalid' })
   }
   const user = await User.findById(userId)
@@ -50,8 +58,20 @@ blogListsRouter.post('/', async (request, response) => {
 
 blogListsRouter.delete('/:id', async (request, response) => {
   const { id } = request?.params
+  const { token } = request
 
-  await BlogList.findByIdAndDelete(id)
+  const userId = decodeToken(token)?.toString()
+  if (!userId) {
+    return response.status(401).json({ error: 'token missing or invalid' })
+  }
+
+  const blog = await BlogList.findById(id)
+  if (isEmpty(blog)) {
+    return response.status(404).json({ error: 'blog not found' })
+  } else if (!blog.user || blog.user?.toString() !== userId) {
+    return response.status(401).json({ error: 'user does not own this blog' })
+  }
+  await blog.remove()
   response.status(204).end()
 })
 
