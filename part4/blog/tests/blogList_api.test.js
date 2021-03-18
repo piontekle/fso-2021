@@ -5,19 +5,22 @@ const api = supertest(app)
 
 const helper = require('./test_helpers')
 const BlogList = require('../models/blogList')
+const User = require('../models/User')
 
 const baseUrl = '/api/lists/'
 
-beforeEach(async () => {
-  await BlogList.deleteMany({})
-
-  for (let blog of helper.moreBlogs) {
-    let blogObj = new BlogList(blog)
-    await blogObj.save()
-  }
-})
-
 describe('BlogLists', () => {
+  beforeEach(async () => {
+    await BlogList.deleteMany({})
+    await User.deleteMany({})
+    const user = await helper.createBatman()
+
+    for (let blog of helper.moreBlogs) {
+      const blogObj = new BlogList(blog)
+      blogObj.user = user.id
+      await blogObj.save()
+    }
+  })
   describe('/GET', () => {
     test('blogLists are returned as json', async () => {
       await api
@@ -42,14 +45,17 @@ describe('BlogLists', () => {
 
   describe('/POST', () => {
     test('a new blog is added to the list', async () => {
+      const batman = await helper.getBatman()
       const newBlog = {
         title: 'Programming is Good For the Soul',
         author: 'The Fake PLizzle',
         url: 'www.getfake.com/programming-good-soul',
         likes: 321,
+        userId: batman[0]._id,
       }
+      const token = helper.getToken(batman[0])
 
-      const res = await api.post(baseUrl).send(newBlog)
+      const res = await api.post(baseUrl).set('Authorization', `Bearer ${token}`).send(newBlog)
       expect(res.status).toBe(201)
       expect(res.body?.title).toBe('Programming is Good For the Soul')
 
@@ -58,25 +64,43 @@ describe('BlogLists', () => {
     })
 
     test('likes defaults to 0', async () => {
+      const batman = await helper.getBatman()
       const newBlogNoLikes = {
         title: 'Make Sure to Set Your Defaults',
         author: 'D. Fault',
         url: 'www.generic.com/set-defaults',
+        userId: batman[0]._id
       }
+      const token = helper.getToken(batman[0])
 
-      const res = await api.post(baseUrl).send(newBlogNoLikes)
+      const res = await api.post(baseUrl).set('Authorization', `Bearer ${token}`).send(newBlogNoLikes)
       expect(res.status).toBe(201)
       expect(res.body?.title).toBe('Make Sure to Set Your Defaults')
       expect(res.body?.likes).toEqual(0)
     })
 
-    test('blog entry without title or url fails', async () => {
+    test('request without token returns 401', async () => {
+      const batman = await helper.getBatman()
       const newBlogNoTitleNoUrl = {
         author: 'D. Fault',
-        likes: 3
+        likes: 3,
+        userId: batman[0]._id
       }
 
-      const res = await api.post(baseUrl).send(newBlogNoTitleNoUrl)
+      const res = await api.post(baseUrl).set('Authorization', 'Bearer ').send(newBlogNoTitleNoUrl)
+      expect(res.status).toBe(401)
+    })
+
+    test('blog entry without title or url fails', async () => {
+      const batman = await helper.getBatman()
+      const newBlogNoTitleNoUrl = {
+        author: 'D. Fault',
+        likes: 3,
+        userId: batman[0]._id
+      }
+      const token = helper.getToken(batman[0])
+
+      const res = await api.post(baseUrl).set('Authorization', `Bearer ${token}`).send(newBlogNoTitleNoUrl)
       expect(res.status).toBe(400)
     })
   })
@@ -84,9 +108,12 @@ describe('BlogLists', () => {
   describe('/DELETE', () => {
     test('deletes one blog entry', async () => {
       const existingId = await helper.getABlogId()
+      const batman = await helper.getBatman()
+      const token = helper.getToken(batman[0])
 
       await api
         .delete(baseUrl + existingId.toString())
+        .set('Authorization', `Bearer ${token}`)
         .expect(204)
 
       const newBlogList = await helper.blogsInDb()

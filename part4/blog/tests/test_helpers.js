@@ -1,3 +1,7 @@
+const jwt = require('jsonwebtoken')
+const bcrypt = require('bcrypt')
+
+const config = require('../utils/config').config
 const BlogList = require('../models/blogList')
 const User = require('../models/User')
 
@@ -54,15 +58,32 @@ const usersInDb = async () => {
   return users
 }
 
-const createUser = async () => {
-  const user = User.create({
+const createBatman = async () => {
+  const saltRounds = 10
+  const passwordHash = await bcrypt.hash('nanana', saltRounds)
+  const user = new User({
     username: 'batman',
     name: 'Bruce Wayne',
-    password: 'nanana'
+    passwordHash
   })
   await user.save()
 
   return user
+}
+
+const getBatman = async () => {
+  return await User.find({ username: 'batman' })
+}
+
+// Login Helper --------------------------------------
+
+const getToken = (user) => {
+  const userForToken = {
+    username: user.username,
+    id: user.id
+  }
+
+  return jwt.sign(userForToken, config.jwtSecret)
 }
 
 module.exports = {
@@ -72,5 +93,7 @@ module.exports = {
   blogsInDb,
   getABlogId,
   usersInDb,
-  createUser,
+  createBatman,
+  getBatman,
+  getToken,
 }
