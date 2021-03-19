@@ -24,4 +24,7 @@ part2
 part3
   L phonebook_pt2
     L Exercises 3.1 - 3.22
+part4
+  L blog
+    L Exercises 4.1 - 4.23
 ```
