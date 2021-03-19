@@ -77,10 +77,11 @@ const getBatman = async () => {
 
 // Login Helper --------------------------------------
 
-const getToken = (user) => {
+const getBatmanToken = async () => {
+  const batman = await getBatman()
   const userForToken = {
-    username: user.username,
-    id: user.id
+    username: 'batman',
+    id: batman[0]._id
   }
 
   return jwt.sign(userForToken, config.jwtSecret)
@@ -95,5 +96,5 @@ module.exports = {
   usersInDb,
   createBatman,
   getBatman,
-  getToken,
+  getBatmanToken,
 }

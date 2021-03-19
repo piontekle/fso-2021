@@ -45,15 +45,13 @@ describe('BlogLists', () => {
 
   describe('/POST', () => {
     test('a new blog is added to the list', async () => {
-      const batman = await helper.getBatman()
       const newBlog = {
         title: 'Programming is Good For the Soul',
         author: 'The Fake PLizzle',
         url: 'www.getfake.com/programming-good-soul',
         likes: 321,
-        userId: batman[0]._id,
       }
-      const token = helper.getToken(batman[0])
+      const token = await helper.getBatmanToken()
 
       const res = await api.post(baseUrl).set('Authorization', `Bearer ${token}`).send(newBlog)
       expect(res.status).toBe(201)
@@ -64,14 +62,12 @@ describe('BlogLists', () => {
     })
 
     test('likes defaults to 0', async () => {
-      const batman = await helper.getBatman()
       const newBlogNoLikes = {
         title: 'Make Sure to Set Your Defaults',
         author: 'D. Fault',
         url: 'www.generic.com/set-defaults',
-        userId: batman[0]._id
       }
-      const token = helper.getToken(batman[0])
+      const token = await helper.getBatmanToken()
 
       const res = await api.post(baseUrl).set('Authorization', `Bearer ${token}`).send(newBlogNoLikes)
       expect(res.status).toBe(201)
@@ -80,11 +76,9 @@ describe('BlogLists', () => {
     })
 
     test('request without token returns 401', async () => {
-      const batman = await helper.getBatman()
       const newBlogNoTitleNoUrl = {
         author: 'D. Fault',
         likes: 3,
-        userId: batman[0]._id
       }
 
       const res = await api.post(baseUrl).set('Authorization', 'Bearer ').send(newBlogNoTitleNoUrl)
@@ -92,13 +86,11 @@ describe('BlogLists', () => {
     })
 
     test('blog entry without title or url fails', async () => {
-      const batman = await helper.getBatman()
       const newBlogNoTitleNoUrl = {
         author: 'D. Fault',
         likes: 3,
-        userId: batman[0]._id
       }
-      const token = helper.getToken(batman[0])
+      const token = await helper.getBatmanToken()
 
       const res = await api.post(baseUrl).set('Authorization', `Bearer ${token}`).send(newBlogNoTitleNoUrl)
       expect(res.status).toBe(400)
@@ -108,8 +100,7 @@ describe('BlogLists', () => {
   describe('/DELETE', () => {
     test('deletes one blog entry', async () => {
       const existingId = await helper.getABlogId()
-      const batman = await helper.getBatman()
-      const token = helper.getToken(batman[0])
+      const token = await helper.getBatmanToken()
 
       await api
         .delete(baseUrl + existingId.toString())

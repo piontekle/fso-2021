@@ -31,9 +31,10 @@ blogListsRouter.get('/', async (request, response) => {
 // })
 
 blogListsRouter.post('/', async (request, response) => {
-  const { title, author, url, likes, userId } = request?.body
+  const { title, author, url, likes } = request?.body
   const { token } = request
-  if (!decodeToken(token)) {
+  const userId = decodeToken(token)
+  if (!userId) {
     return response.status(401).json({ error: 'token missing or invalid' })
   }
   const user = await User.findById(userId)

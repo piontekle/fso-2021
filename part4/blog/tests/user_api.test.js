@@ -9,11 +9,11 @@ const User = require('../models/user')
 
 const baseUrl = '/api/users/'
 
-beforeEach(async () => {
-  await User.deleteMany({})
-})
-
 describe('Users', () => {
+  beforeEach(async () => {
+    await User.deleteMany({})
+  })
+
   describe('when there is initially one user in db', () => {
     beforeEach(async () => {
       const passwordHash = await bcrypt.hash('sekret', 10)
