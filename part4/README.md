@@ -34,7 +34,7 @@ Then we went over creating users, including using `bcrypt` to hash passwords for
 
 We created and tested our `POST/` for our users endpoints and adjusted the code so that when we added a post, it was given a user ID and its ID was stored to the user. Then we added `populate()` to load the posts when we get users instead of just returning their IDs.
 
-** Other Resources: **
+**Other Resources:**
 - [Fundamentals of Storing Passowrds](https://codahale.com/how-to-safely-store-a-password/)
 
 ### Token Authentication
