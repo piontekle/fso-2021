@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useForm, FormProvider } from 'react-hook-form'
 
-import { Blog, LoginForm } from './components'
+import { Blog, Button, LoginForm } from './components'
 import blogService from './services/blogs'
 
 const App = () => {
@@ -17,7 +17,13 @@ const App = () => {
   }, [])
 
   const login = (user) => {
+    window.localStorage.setItem('loggedInUser', JSON.stringify(user))
     setUser(user)
+  }
+
+  const logout = () => {
+    window.localStorage.removeItem('loggedInUser')
+    setUser(null)
   }
 
   return (
@@ -30,6 +36,7 @@ const App = () => {
                 `${user.name} is logged in`
                 : 'Logged in'
               }
+              <Button onClick={logout} label="Logout" />
             </div>
             {blogs.map(blog =>
               <Blog key={blog.id} blog={blog} />
