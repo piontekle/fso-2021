@@ -1,16 +1,24 @@
 import React, { useState, useEffect } from 'react'
-import { useForm, FormProvider } from 'react-hook-form'
 
-import { Blog, Button, LoginForm } from './components'
+import {
+  Blog,
+  BlogForm,
+  Button,
+  LoginForm 
+} from './components'
 import blogService from './services/blogs'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
   const [user, setUser] = useState(null)
 
-  const methods = useForm({ mode: 'onBlur' })
-
   useEffect(() => {
+    const loggedInUserJSON = window.localStorage.getItem('loggedInUser')
+    if (loggedInUserJSON) {
+      const user = JSON.parse(loggedInUserJSON)
+      setUser(user)
+      blogService.setToken(user.token)
+    }
     blogService.getAll().then(blogs =>
       setBlogs(blogs)
     )  
@@ -18,12 +26,19 @@ const App = () => {
 
   const login = (user) => {
     window.localStorage.setItem('loggedInUser', JSON.stringify(user))
+    blogService.setToken(user.token)
     setUser(user)
   }
 
   const logout = () => {
     window.localStorage.removeItem('loggedInUser')
+    blogService.setToken(null)
     setUser(null)
+  }
+
+  const onCreateBlog = (newBlog) => {
+    console.log(newBlog)
+    setBlogs(blogs.concat(newBlog))
   }
 
   return (
@@ -37,16 +52,13 @@ const App = () => {
                 : 'Logged in'
               }
               <Button onClick={logout} label="Logout" />
+              <BlogForm onCreateBlog={onCreateBlog} />
             </div>
             {blogs.map(blog =>
               <Blog key={blog.id} blog={blog} />
             )}
           </>
-        ) : (
-          <FormProvider {...methods}>
-            <LoginForm onLogin={login} />
-          </FormProvider>
-        )
+        ) : <LoginForm onLogin={login} />
       }
     </div>
   )
