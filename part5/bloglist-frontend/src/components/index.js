@@ -3,6 +3,7 @@ import BlogForm from './BlogForm'
 import Button from './Button'
 import LoginForm from './LoginForm'
 import Notification from './Notification'
+import Togglable from './Togglable'
 
 export {
   Blog,
@@ -10,4 +11,5 @@ export {
   Button,
   LoginForm,
   Notification,
+  Togglable,
 }

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
 import {
   Blog,
@@ -6,6 +6,7 @@ import {
   Button,
   LoginForm,
   Notification,
+  Togglable,
 } from './components'
 import blogService from './services/blogs'
 
@@ -13,6 +14,8 @@ const App = () => {
   const [blogs, setBlogs] = useState([])
   const [user, setUser] = useState(null)
   const [notif, setNotif] = useState(null)
+
+  const blogFormRef = useRef()
 
   useEffect(() => {
     const loggedInUserJSON = window.localStorage.getItem('loggedInUser')
@@ -46,6 +49,7 @@ const App = () => {
 
   const onCreateBlog = (newBlog) => {
     setBlogs(blogs.concat(newBlog))
+    blogFormRef.current.toggleVisibility()
     setNotif({ message: `Successfully created ${newBlog.title} entry`, type: 'success' })
     setTimeout(() => resetNotif(), 5000);
   }
@@ -59,12 +63,16 @@ const App = () => {
               {notif !== null && 
                 <Notification message={notif.message} type={notif.type} />
               }
-              {user.name ? 
-                `${user.name} is logged in`
-                : 'Logged in'
-              }
+              <div>
+                {user.name ? 
+                  `${user.name} is logged in`
+                  : 'Logged in'
+                }
+              </div>
               <Button onClick={logout} label="Logout" />
-              <BlogForm onCreateBlog={onCreateBlog} />
+              <Togglable buttonLabel='new blog' ref={blogFormRef}>
+                <BlogForm onCreateBlog={onCreateBlog} />
+              </Togglable>
             </div>
             {blogs.map(blog =>
               <Blog key={blog.id} blog={blog} />

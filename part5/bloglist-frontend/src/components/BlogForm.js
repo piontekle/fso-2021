@@ -9,13 +9,14 @@ import blogService from '../services/blogs'
 
 const BlogForm = ({ onCreateBlog }) => {
   const [error, setError] = useState(null)
-  const { register, formState: { errors }, handleSubmit } = useForm();
+  const { register, formState: { errors }, handleSubmit, reset } = useForm();
 
 
   const onSubmit = async (data) => {
     try {
       const res = await blogService.createBlog(data)
       setError(false)
+      reset()
       onCreateBlog(res.data)
     } catch (error) {
       console.log(error)

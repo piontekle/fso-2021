@@ -16,6 +16,12 @@ window.localStorage.removeItem('key')
 ```
 We can save the whole user to storage by parsing it into JSON using `JSON.stringify(user)`. We can add a logout by using the `.removeItem()` function.
 
+It's also good to note that the token isn't necessarily safe in the local storage. It does leave sensitive user data subject to Cross Site Scripting (XXS) attacks. If a token getting leaked would be a major security risk, then the best is to not store it locally, but the most practical solution is generally to minimize the risk of XXS attacks in the first place.
+
+**Other Resources:**
+
+- [Minimizing Risk of XXS Attacks Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/DOM_based_XSS_Prevention_Cheat_Sheet.html)
+
 ### prop.children and proptypes
 
 ### Test React apps
