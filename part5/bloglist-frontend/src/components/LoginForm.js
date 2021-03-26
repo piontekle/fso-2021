@@ -2,9 +2,7 @@ import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import isEmpty from 'lodash/isEmpty'
 
-import TextBox from './TextBox'
-import Button from './Button'
-import Notification from './Notification'
+import { Button, Notification, TextBox } from '../components'
 import loginService from '../services/login'
 
 const LoginForm = ({ onLogin }) => {

@@ -2,8 +2,20 @@ import React, { useState, useImperativeHandle } from 'react';
 
 import Button from './Button';
 
-const Togglable = React.forwardRef((props, ref) => {
+const Togglable = React.forwardRef(({
+  buttonLabel,
+  cancelLabel,
+  children,
+  inline,
+}, ref) => {
   const [visible, setVisible] = useState(false)
+
+  const toggleStyle = inline ?
+    { 
+      display: 'inline',
+      marginTop: 10,
+      marginLeft: 10
+    } : {}
 
   const toggleVisibility = () => setVisible(!visible)
 
@@ -14,17 +26,17 @@ const Togglable = React.forwardRef((props, ref) => {
   })
 
   return (
-    <div>
+    <div style={toggleStyle}>
       {!visible && 
         <Button
           onClick={toggleVisibility}
-          label={props.buttonLabel}
+          label={buttonLabel}
         />
       }
       {visible &&
         <div>
-          {props.children}
-          <Button onClick={toggleVisibility} label="cancel" />
+          {children}
+          <Button onClick={toggleVisibility} label={cancelLabel ? cancelLabel : 'cancel'} />
         </div>
       }
     </div>
