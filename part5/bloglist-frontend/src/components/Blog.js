@@ -1,9 +1,9 @@
 import React from 'react'
 
 import { Button, Togglable } from '../components'
-import { updateBlog } from '../services/blogs'
+import { removeBlog, updateBlog } from '../services/blogs'
 
-const Blog = ({ blog, onUpdateBlog }) => {
+const Blog = ({ blog, onRemoveBlog, onUpdateBlog }) => {
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
@@ -22,6 +22,16 @@ const Blog = ({ blog, onUpdateBlog }) => {
     onUpdateBlog(res.data)
   }
 
+  const remove = async (id) => {
+    try {
+      await removeBlog(id)
+      onRemoveBlog(id)
+    } catch(error) {
+      onRemoveBlog(null)
+      console.log(error)
+    }
+  }
+
   return (
     <div style={blogStyle}>
       {blog.title} by {blog.author}
@@ -32,6 +42,7 @@ const Blog = ({ blog, onUpdateBlog }) => {
           <Button label="like" onClick={() => updateLike(blog)}/>
         </div>
         <div>{blog?.user?.name}</div>
+        <Button label="remove" onClick={() => remove(blog.id)} />
       </Togglable>
     </div>  
   )

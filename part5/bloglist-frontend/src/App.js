@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
+import filter from 'lodash/filter'
 import map from 'lodash/map'
 import sortBy from 'lodash/sortBy'
 
@@ -71,6 +72,11 @@ const App = () => {
     setSortedBlogs(updatedBlogs)
   }
 
+  const onRemoveBlog = (blogId) => {
+    const filtered = filter(blogs, blog => blog.id !== blogId)
+    setSortedBlogs(filtered)
+  }
+
   return (
     <div>
       <h2>blogs</h2>
@@ -92,7 +98,12 @@ const App = () => {
               </Togglable>
             </div>
             {map(blogs, blog =>
-              <Blog key={blog.id} blog={blog} onUpdateBlog={onUpdateBlog} />
+              <Blog
+                key={blog.id}
+                blog={blog}
+                onRemoveBlog={onRemoveBlog}
+                onUpdateBlog={onUpdateBlog} 
+              />
             )}
           </>
         ) : <LoginForm onLogin={login} />
