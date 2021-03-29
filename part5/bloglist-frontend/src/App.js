@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import map from 'lodash/map'
+import sortBy from 'lodash/sortBy'
 
 import {
   Blog,
@@ -16,6 +17,11 @@ const App = () => {
   const [user, setUser] = useState(null)
   const [notif, setNotif] = useState(null)
 
+  const setSortedBlogs = (blogs) => {
+    const sorted = sortBy(blogs, blog => -blog.likes)
+    setBlogs(sorted)
+  }
+
   const blogFormRef = useRef()
 
   useEffect(() => {
@@ -26,7 +32,7 @@ const App = () => {
       setToken(user.token)
     }
     getAll().then(blogs =>
-      setBlogs(blogs)
+      setSortedBlogs(blogs)
     )  
   }, [])
 
@@ -49,7 +55,7 @@ const App = () => {
   }
 
   const onCreateBlog = (newBlog) => {
-    setBlogs(blogs.concat(newBlog))
+    setSortedBlogs(blogs.concat(newBlog))
     blogFormRef.current.toggleVisibility()
     setNotif({ message: `Successfully created ${newBlog.title} entry`, type: 'success' })
     setTimeout(() => resetNotif(), 5000);
@@ -62,7 +68,7 @@ const App = () => {
       }
       return blog
     })
-    setBlogs(updatedBlogs)
+    setSortedBlogs(updatedBlogs)
   }
 
   return (
@@ -85,7 +91,7 @@ const App = () => {
                 <BlogForm onCreateBlog={onCreateBlog} />
               </Togglable>
             </div>
-            {blogs.map(blog =>
+            {map(blogs, blog =>
               <Blog key={blog.id} blog={blog} onUpdateBlog={onUpdateBlog} />
             )}
           </>
