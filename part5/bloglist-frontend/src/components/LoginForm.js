@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form'
 import isEmpty from 'lodash/isEmpty'
 
 import { Button, Notification, TextBox } from '../components'
-import loginService from '../services/login'
+import { login } from '../services/login'
 
 const LoginForm = ({ onLogin }) => {
   const [error, setError] = useState(false)
@@ -11,7 +11,7 @@ const LoginForm = ({ onLogin }) => {
 
   const login = async user => {
     try {
-      const res = await loginService.login(user)
+      const res = await login(user)
       setError(false)
       onLogin(res.data)
     } catch (error) {

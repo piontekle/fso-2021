@@ -5,7 +5,7 @@ import isEmpty from 'lodash/isEmpty';
 import TextBox from './TextBox'
 import Button from './Button'
 import Notification from './Notification'
-import blogService from '../services/blogs'
+import { createBlog } from '../services/blogs'
 
 const BlogForm = ({ onCreateBlog }) => {
   const [error, setError] = useState(null)
@@ -14,7 +14,7 @@ const BlogForm = ({ onCreateBlog }) => {
 
   const onSubmit = async (data) => {
     try {
-      const res = await blogService.createBlog(data)
+      const res = await createBlog(data)
       setError(false)
       reset()
       onCreateBlog(res.data)

@@ -5,4 +5,4 @@ const login = async (user) => {
   return await axios.post(baseUrl, user)
 }
 
-export default { login }
+export { login }

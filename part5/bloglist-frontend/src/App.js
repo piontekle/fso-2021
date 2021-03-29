@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
+import map from 'lodash/map'
 
 import {
   Blog,
@@ -8,7 +9,7 @@ import {
   Notification,
   Togglable,
 } from './components'
-import blogService from './services/blogs'
+import { getAll, setToken } from './services/blogs'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
@@ -22,9 +23,9 @@ const App = () => {
     if (loggedInUserJSON) {
       const user = JSON.parse(loggedInUserJSON)
       setUser(user)
-      blogService.setToken(user.token)
+      setToken(user.token)
     }
-    blogService.getAll().then(blogs =>
+    getAll().then(blogs =>
       setBlogs(blogs)
     )  
   }, [])
@@ -33,7 +34,7 @@ const App = () => {
 
   const login = (user) => {
     window.localStorage.setItem('loggedInUser', JSON.stringify(user))
-    blogService.setToken(user.token)
+    setToken(user.token)
     setUser(user)
     setNotif({ message: `${user.username} successfully logged in`, type: 'success' })
     setTimeout(() => resetNotif(), 5000);
@@ -41,7 +42,7 @@ const App = () => {
 
   const logout = () => {
     window.localStorage.removeItem('loggedInUser')
-    blogService.setToken(null)
+    setToken(null)
     setUser(null)
     setNotif({ message: 'Successfully logged out', type: 'success' })
     setTimeout(() => resetNotif(), 5000);
@@ -52,6 +53,16 @@ const App = () => {
     blogFormRef.current.toggleVisibility()
     setNotif({ message: `Successfully created ${newBlog.title} entry`, type: 'success' })
     setTimeout(() => resetNotif(), 5000);
+  }
+
+  const onUpdateBlog = (updatedBlog) => {
+    const updatedBlogs = map(blogs, blog => {
+      if (blog.id === updatedBlog.id) {
+        return updatedBlog
+      }
+      return blog
+    })
+    setBlogs(updatedBlogs)
   }
 
   return (
@@ -75,7 +86,7 @@ const App = () => {
               </Togglable>
             </div>
             {blogs.map(blog =>
-              <Blog key={blog.id} blog={blog} />
+              <Blog key={blog.id} blog={blog} onUpdateBlog={onUpdateBlog} />
             )}
           </>
         ) : <LoginForm onLogin={login} />

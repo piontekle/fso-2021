@@ -1,8 +1,9 @@
 import React from 'react'
 
-import { Button, Togglable } from '../components';
+import { Button, Togglable } from '../components'
+import { updateBlog } from '../services/blogs'
 
-const Blog = ({ blog }) => {
+const Blog = ({ blog, onUpdateBlog }) => {
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
@@ -13,6 +14,14 @@ const Blog = ({ blog }) => {
     margin: 5
   }
 
+  const updateLike = async (blog) => {
+    const res = await updateBlog({ 
+      ...blog,
+      likes: blog.likes + 1 
+    })
+    onUpdateBlog(res.data)
+  }
+
   return (
     <div style={blogStyle}>
       {blog.title} by {blog.author}
@@ -20,7 +29,7 @@ const Blog = ({ blog }) => {
         <div>{blog.url}</div>
         <div>
           {blog.likes}
-          <Button label="like" onClick={() => console.log('like')}/>
+          <Button label="like" onClick={() => updateLike(blog)}/>
         </div>
         <div>{blog?.user?.name}</div>
       </Togglable>
