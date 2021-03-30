@@ -1,6 +1,7 @@
-import React, { useState, useImperativeHandle } from 'react';
+import React, { useState, useImperativeHandle } from 'react'
+import PropTypes from 'prop-types'
 
-import Button from './Button';
+import Button from './Button'
 
 const Togglable = React.forwardRef(({
   buttonLabel,
@@ -11,7 +12,7 @@ const Togglable = React.forwardRef(({
   const [visible, setVisible] = useState(false)
 
   const toggleStyle = inline ?
-    { 
+    {
       display: 'inline',
       marginTop: 10,
       marginLeft: 10
@@ -27,7 +28,7 @@ const Togglable = React.forwardRef(({
 
   return (
     <div style={toggleStyle}>
-      {!visible && 
+      {!visible &&
         <Button
           onClick={toggleVisibility}
           label={buttonLabel}
@@ -36,11 +37,23 @@ const Togglable = React.forwardRef(({
       {visible &&
         <div>
           {children}
-          <Button onClick={toggleVisibility} label={cancelLabel ? cancelLabel : 'cancel'} />
+          <Button onClick={toggleVisibility} label={cancelLabel} />
         </div>
       }
     </div>
   )
 })
+
+Togglable.displayName = 'Togglable'
+
+Togglable.propTypes = {
+  buttonLabel: PropTypes.string.isRequired,
+  cancelLabel: PropTypes.string,
+  inline: PropTypes.bool,
+}
+
+Togglable.defaultProps = {
+  cancelLabel: 'cancel',
+}
 
 export default Togglable

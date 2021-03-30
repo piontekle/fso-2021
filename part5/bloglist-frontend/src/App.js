@@ -34,7 +34,7 @@ const App = () => {
     }
     getAll().then(blogs =>
       setSortedBlogs(blogs)
-    )  
+    )
   }, [])
 
   const resetNotif = () => setNotif(null)
@@ -44,7 +44,7 @@ const App = () => {
     setToken(user.token)
     setUser(user)
     setNotif({ message: `${user.username} successfully logged in`, type: 'success' })
-    setTimeout(() => resetNotif(), 5000);
+    setTimeout(() => resetNotif(), 5000)
   }
 
   const logout = () => {
@@ -52,14 +52,14 @@ const App = () => {
     setToken(null)
     setUser(null)
     setNotif({ message: 'Successfully logged out', type: 'success' })
-    setTimeout(() => resetNotif(), 5000);
+    setTimeout(() => resetNotif(), 5000)
   }
 
   const onCreateBlog = (newBlog) => {
     setSortedBlogs(blogs.concat(newBlog))
     blogFormRef.current.toggleVisibility()
     setNotif({ message: `Successfully created ${newBlog.title} entry`, type: 'success' })
-    setTimeout(() => resetNotif(), 5000);
+    setTimeout(() => resetNotif(), 5000)
   }
 
   const onUpdateBlog = (updatedBlog) => {
@@ -81,32 +81,32 @@ const App = () => {
     <div>
       <h2>blogs</h2>
       {user ? (
-          <>
-            <div>
-              {notif !== null && 
+        <>
+          <div>
+            {notif !== null &&
                 <Notification message={notif.message} type={notif.type} />
+            }
+            <div>
+              {user.name ?
+                `${user.name} is logged in`
+                : 'Logged in'
               }
-              <div>
-                {user.name ? 
-                  `${user.name} is logged in`
-                  : 'Logged in'
-                }
-              </div>
-              <Button onClick={logout} label="Logout" />
-              <Togglable buttonLabel='new blog' ref={blogFormRef}>
-                <BlogForm onCreateBlog={onCreateBlog} />
-              </Togglable>
             </div>
-            {map(blogs, blog =>
-              <Blog
-                key={blog.id}
-                blog={blog}
-                onRemoveBlog={onRemoveBlog}
-                onUpdateBlog={onUpdateBlog} 
-              />
-            )}
-          </>
-        ) : <LoginForm onLogin={login} />
+            <Button onClick={logout} label="Logout" />
+            <Togglable buttonLabel='new blog' ref={blogFormRef}>
+              <BlogForm onCreateBlog={onCreateBlog} />
+            </Togglable>
+          </div>
+          {map(blogs, blog =>
+            <Blog
+              key={blog.id}
+              blog={blog}
+              onRemoveBlog={onRemoveBlog}
+              onUpdateBlog={onUpdateBlog}
+            />
+          )}
+        </>
+      ) : <LoginForm onLogin={login} />
       }
     </div>
   )

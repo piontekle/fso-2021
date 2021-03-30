@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import isEmpty from 'lodash/isEmpty';
+import PropTypes from 'prop-types'
+import isEmpty from 'lodash/isEmpty'
 
 import TextBox from './TextBox'
 import Button from './Button'
@@ -9,7 +10,7 @@ import { createBlog } from '../services/blogs'
 
 const BlogForm = ({ onCreateBlog }) => {
   const [error, setError] = useState(null)
-  const { register, formState: { errors }, handleSubmit, reset } = useForm();
+  const { register, formState: { errors }, handleSubmit, reset } = useForm()
 
 
   const onSubmit = async (data) => {
@@ -30,9 +31,9 @@ const BlogForm = ({ onCreateBlog }) => {
         label="Title"
         name="title"
         register={register({ required: 'Title is required' })}
-        required 
+        required
       />
-      {!isEmpty(errors.title) && 
+      {!isEmpty(errors.title) &&
         <Notification type="error" message={errors.title.message}/>
       }
       <TextBox label="Author" name="author" register={register} />
@@ -40,17 +41,21 @@ const BlogForm = ({ onCreateBlog }) => {
         label="URL"
         name="url"
         register={register({ required: 'URL is required' })}
-        required 
+        required
       />
-      {!isEmpty(errors.url) && 
+      {!isEmpty(errors.url) &&
         <Notification type="error" message={errors.url.message}/>
       }
       <Button type="submit" label="create" />
-      {error && 
+      {error &&
         <Notification type="error" message="Unable to create blog entry at this time" />
       }
     </form>
   )
+}
+
+BlogForm.propTypes = {
+  onCreateBlog: PropTypes.func.isRequired
 }
 
 export default BlogForm

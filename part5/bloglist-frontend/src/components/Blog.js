@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import { Button, Togglable } from '../components'
 import { removeBlog, updateBlog } from '../services/blogs'
@@ -15,9 +16,9 @@ const Blog = ({ blog, onRemoveBlog, onUpdateBlog }) => {
   }
 
   const updateLike = async (blog) => {
-    const res = await updateBlog({ 
+    const res = await updateBlog({
       ...blog,
-      likes: blog.likes + 1 
+      likes: blog.likes + 1
     })
     onUpdateBlog(res.data)
   }
@@ -41,11 +42,17 @@ const Blog = ({ blog, onRemoveBlog, onUpdateBlog }) => {
           {blog.likes}
           <Button label="like" onClick={() => updateLike(blog)}/>
         </div>
-        <div>{blog?.user?.name}</div>
+        <div>{blog.user?.name}</div>
         <Button label="remove" onClick={() => remove(blog.id)} />
       </Togglable>
-    </div>  
+    </div>
   )
+}
+
+Blog.propTypes = {
+  blog: PropTypes.object.isRequired,
+  onRemoveBlog: PropTypes.func.isRequired,
+  onUpdateBlog: PropTypes.func.isRequired,
 }
 
 export default Blog

@@ -1,6 +1,6 @@
-import React from 'react';
+import React from 'react'
 
-const TextBox = ({ 
+const TextBox = ({
   label,
   name,
   register,
@@ -21,4 +21,4 @@ const TextBox = ({
   </>
 )
 
-export default TextBox;
+export default TextBox

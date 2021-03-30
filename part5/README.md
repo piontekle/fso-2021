@@ -24,6 +24,10 @@ It's also good to note that the token isn't necessarily safe in the local storag
 
 ### prop.children and proptypes
 
+Accessed at `props.children`, `children` are built into React and will render the defined React elements placed between the component in question's tags. This allowed us to build a togglable component to toggle visibility on and off, by placing an element within the `Togglable` tags. We also added a `ref` (with use of the `useRef()` and `useImperitiveHandle()` hooks) to be able to access the `toggleVisibility()` function in the higher/parent component.
+
+We then covered `PropTypes` and added `prop-types` to our app in order to type restrict and name required props in our components. Then we set up `eslint` to make our styles consistent (`create-react-app` installs its own ESLint version)
+
 ### Test React apps
 
 
