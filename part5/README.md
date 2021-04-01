@@ -26,9 +26,28 @@ It's also good to note that the token isn't necessarily safe in the local storag
 
 Accessed at `props.children`, `children` are built into React and will render the defined React elements placed between the component in question's tags. This allowed us to build a togglable component to toggle visibility on and off, by placing an element within the `Togglable` tags. We also added a `ref` (with use of the `useRef()` and `useImperitiveHandle()` hooks) to be able to access the `toggleVisibility()` function in the higher/parent component.
 
-We then covered `PropTypes` and added `prop-types` to our app in order to type restrict and name required props in our components. Then we set up `eslint` to make our styles consistent (`create-react-app` installs its own ESLint version)
+We then covered `PropTypes` and added `prop-types` to our app in order to type restrict and name required props in our components. Then we set up `eslint` to make our styles consistent (`create-react-app` installs its own ESLint version). I updated the `ecmaVersion` to 2020 to allow for optional chaining.
 
 ### Test React apps
 
+We went over adding testing libraries and the `render()` function that renders our components with the props we supply. It creates a `container` that we can test with functions like `expect()...toHaveTestContent()` or `component.getByText()`. `.querySelector()` is another option for finding elements rendered in the page. We can log what's rendered to the console using `prettyDom`.
+
+In order to click buttons, like `toggleImportance`, we use the testing library's `fireEvent`. In order to mock an onClick handler, we use `jest.fn()`. `fireEvent` can also be used for inputs. Ex:
+
+```javascript
+const input = component.container.querySelector('input')
+  const form = component.container.querySelector('form')
+
+  fireEvent.change(input, { 
+    target: { value: 'testing of forms could be easier' } 
+  })
+  fireEvent.submit(form)
+  ```
+
+Running the below command will show us coverage:
+
+```bash
+CI=true npm test -- --coverage
+```
 
 ### End to end testing

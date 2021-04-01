@@ -34,7 +34,7 @@ const Blog = ({ blog, onRemoveBlog, onUpdateBlog }) => {
   }
 
   return (
-    <div style={blogStyle}>
+    <div style={blogStyle} data-testid={`blog-${blog.id}`}>
       {blog.title} by {blog.author}
       <Togglable buttonLabel="view" cancelLabel="hide" inline>
         <div>{blog.url}</div>
