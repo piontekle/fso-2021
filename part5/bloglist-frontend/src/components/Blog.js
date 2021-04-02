@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { Button, Togglable } from '../components'
-import { removeBlog, updateBlog } from '../services/blogs'
 
 const Blog = ({ blog, onRemoveBlog, onUpdateBlog }) => {
   const blogStyle = {
@@ -15,24 +14,6 @@ const Blog = ({ blog, onRemoveBlog, onUpdateBlog }) => {
     margin: 5
   }
 
-  const updateLike = async (blog) => {
-    const res = await updateBlog({
-      ...blog,
-      likes: blog.likes + 1
-    })
-    onUpdateBlog(res.data)
-  }
-
-  const remove = async (id) => {
-    try {
-      await removeBlog(id)
-      onRemoveBlog(id)
-    } catch(error) {
-      onRemoveBlog(null)
-      console.log(error)
-    }
-  }
-
   return (
     <div style={blogStyle} data-testid={`blog-${blog.id}`}>
       {blog.title} by {blog.author}
@@ -40,10 +21,10 @@ const Blog = ({ blog, onRemoveBlog, onUpdateBlog }) => {
         <div>{blog.url}</div>
         <div>
           {blog.likes}
-          <Button label="like" onClick={() => updateLike(blog)}/>
+          <Button label="like" onClick={() => onUpdateBlog({ ...blog, likes: blog.likes + 1 })}/>
         </div>
         <div>{blog.user?.name}</div>
-        <Button label="remove" onClick={() => remove(blog.id)} />
+        <Button label="remove" onClick={() => onRemoveBlog(blog.id)} />
       </Togglable>
     </div>
   )

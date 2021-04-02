@@ -11,7 +11,8 @@ import {
   Notification,
   Togglable,
 } from './components'
-import { getAll, setToken } from './services/blogs'
+import { createBlog, getAll, removeBlog, setToken, updateBlog } from './services/blogs'
+import { login } from './services/login'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
@@ -39,12 +40,20 @@ const App = () => {
 
   const resetNotif = () => setNotif(null)
 
-  const login = (user) => {
-    window.localStorage.setItem('loggedInUser', JSON.stringify(user))
-    setToken(user.token)
-    setUser(user)
-    setNotif({ message: `${user.username} successfully logged in`, type: 'success' })
-    setTimeout(() => resetNotif(), 5000)
+  const onLogin = async (data) => {
+    try {
+      console.log(data)
+      const { data: user } = await login(data)
+      window.localStorage.setItem('loggedInUser', JSON.stringify(user))
+      setToken(user.token)
+      setUser(user)
+      setNotif({ message: `${user.username} successfully logged in`, type: 'success' })
+      setTimeout(() => resetNotif(), 5000)
+    } catch (error) {
+      console.log(error)
+      setNotif({ message: 'Incorrect username or password', type: 'error' })
+      setTimeout(() => resetNotif(), 5000)
+    }
   }
 
   const logout = () => {
@@ -55,37 +64,56 @@ const App = () => {
     setTimeout(() => resetNotif(), 5000)
   }
 
-  const onCreateBlog = (newBlog) => {
-    setSortedBlogs(blogs.concat(newBlog))
-    blogFormRef.current.toggleVisibility()
-    setNotif({ message: `Successfully created ${newBlog.title} entry`, type: 'success' })
-    setTimeout(() => resetNotif(), 5000)
+  const onCreateBlog = async (data) => {
+    try {
+      const { data: newBlog } = await createBlog(data)
+      setSortedBlogs(blogs.concat(newBlog))
+      blogFormRef.current.toggleVisibility()
+      setNotif({ message: `Successfully created ${newBlog.title} entry`, type: 'success' })
+      setTimeout(() => resetNotif(), 5000)
+    } catch (error) {
+      console.log(error)
+      setNotif({ message: `Unable to create ${data.title}`, type: 'error' })
+      setTimeout(() => resetNotif(), 5000)
+    }
   }
 
-  const onUpdateBlog = (updatedBlog) => {
-    const updatedBlogs = map(blogs, blog => {
-      if (blog.id === updatedBlog.id) {
-        return updatedBlog
-      }
-      return blog
-    })
-    setSortedBlogs(updatedBlogs)
+  const onUpdateBlog = async (blog) => {
+    try {
+      const { data: updatedBlog } = await updateBlog(blog)
+      const updatedBlogs = map(blogs, blog => {
+        if (blog.id === updatedBlog.id) {
+          return updatedBlog
+        }
+        return blog
+      })
+      setSortedBlogs(updatedBlogs)
+    } catch (error) {
+      setNotif({ message: `Unable to update ${blog.title}`, type: 'error' })
+      setTimeout(() => resetNotif(), 5000)
+    }
   }
 
-  const onRemoveBlog = (blogId) => {
-    const filtered = filter(blogs, blog => blog.id !== blogId)
-    setSortedBlogs(filtered)
+  const onRemoveBlog = async (blogId) => {
+    try {
+      await removeBlog(blogId)
+      const filtered = filter(blogs, blog => blog.id !== blogId)
+      setSortedBlogs(filtered)
+    } catch (error) {
+      setNotif({ message: 'Unable to remove blog', type: 'error' })
+      setTimeout(() => resetNotif(), 5000)
+    }
   }
 
   return (
     <div>
       <h2>blogs</h2>
+      {notif !== null &&
+        <Notification message={notif.message} type={notif.type} />
+      }
       {user ? (
         <>
           <div>
-            {notif !== null &&
-                <Notification message={notif.message} type={notif.type} />
-            }
             <div>
               {user.name ?
                 `${user.name} is logged in`
@@ -106,7 +134,7 @@ const App = () => {
             />
           )}
         </>
-      ) : <LoginForm onLogin={login} />
+      ) : <LoginForm onLogin={onLogin} />
       }
     </div>
   )

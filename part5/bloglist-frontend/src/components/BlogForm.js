@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useForm } from 'react-hook-form'
 import PropTypes from 'prop-types'
 import isEmpty from 'lodash/isEmpty'
@@ -6,26 +6,12 @@ import isEmpty from 'lodash/isEmpty'
 import TextBox from './TextBox'
 import Button from './Button'
 import Notification from './Notification'
-import { createBlog } from '../services/blogs'
 
 const BlogForm = ({ onCreateBlog }) => {
-  const [error, setError] = useState(null)
-  const { register, formState: { errors }, handleSubmit, reset } = useForm()
+  const { register, formState: { errors }, handleSubmit } = useForm()
 
-
-  const onSubmit = async (data) => {
-    try {
-      const res = await createBlog(data)
-      setError(false)
-      reset()
-      onCreateBlog(res.data)
-    } catch (error) {
-      console.log(error)
-      setError(true)
-    }
-  }
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onCreateBlog)}>
       <legend>Create Blog</legend>
       <TextBox
         label="Title"
@@ -47,9 +33,6 @@ const BlogForm = ({ onCreateBlog }) => {
         <Notification type="error" message={errors.url.message}/>
       }
       <Button type="submit" label="create" />
-      {error &&
-        <Notification type="error" message="Unable to create blog entry at this time" />
-      }
     </form>
   )
 }
