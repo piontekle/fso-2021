@@ -5,6 +5,7 @@ const TextBox = ({
   name,
   register,
   required,
+  testId,
   type,
 }) => (
   <>
@@ -14,6 +15,7 @@ const TextBox = ({
       </label>
     </div>
     <input
+      data-testid={testId}
       name={name}
       ref={register}
       type={type}

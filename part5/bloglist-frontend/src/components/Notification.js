@@ -37,7 +37,7 @@ const Notification = ({ type, message }) => {
   }
 
   return (
-    <div style={styles[type]}>
+    <div data-testid={type} style={styles[type]}>
       {message}
     </div>
   )

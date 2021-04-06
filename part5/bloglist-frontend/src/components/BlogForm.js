@@ -11,9 +11,10 @@ const BlogForm = ({ onCreateBlog }) => {
   const { register, formState: { errors }, handleSubmit } = useForm()
 
   return (
-    <form onSubmit={handleSubmit(onCreateBlog)}>
+    <form data-testid="blogForm" onSubmit={handleSubmit(onCreateBlog)}>
       <legend>Create Blog</legend>
       <TextBox
+        testId="title"
         label="Title"
         name="title"
         register={register({ required: 'Title is required' })}
@@ -22,8 +23,9 @@ const BlogForm = ({ onCreateBlog }) => {
       {!isEmpty(errors.title) &&
         <Notification type="error" message={errors.title.message}/>
       }
-      <TextBox label="Author" name="author" register={register} />
+      <TextBox testId="author" label="Author" name="author" register={register} />
       <TextBox
+        testId="url"
         label="URL"
         name="url"
         register={register({ required: 'URL is required' })}
