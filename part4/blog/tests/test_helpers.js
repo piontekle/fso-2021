@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 
-const config = require('../utils/config').config
+const { jwtSecret } = require('../utils/config').config
 const BlogList = require('../models/blogList')
 const User = require('../models/User')
 
@@ -84,7 +84,7 @@ const getBatmanToken = async () => {
     id: batman[0]._id
   }
 
-  return jwt.sign(userForToken, config.jwtSecret)
+  return jwt.sign(userForToken, jwtSecret)
 }
 
 module.exports = {

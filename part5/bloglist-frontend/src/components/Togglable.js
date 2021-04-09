@@ -5,6 +5,7 @@ import Button from './Button'
 
 const Togglable = React.forwardRef(({
   buttonLabel,
+  buttonTestId,
   cancelLabel,
   children,
   inline,
@@ -30,6 +31,7 @@ const Togglable = React.forwardRef(({
     <div style={toggleStyle}>
       {!visible &&
         <Button
+          testId={buttonTestId}
           onClick={toggleVisibility}
           label={buttonLabel}
         />
@@ -37,7 +39,7 @@ const Togglable = React.forwardRef(({
       {visible &&
         <div>
           {children}
-          <Button onClick={toggleVisibility} label={cancelLabel} />
+          <Button testId="cancel" onClick={toggleVisibility} label={cancelLabel} />
         </div>
       }
     </div>

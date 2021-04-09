@@ -13,19 +13,21 @@ const LoginForm = ({ onLogin }) => {
       <form onSubmit={handleSubmit(onLogin)}>
         <legend>Login</legend>
         <TextBox
+          testId="username"
           label="Username"
           name="username"
           register={register({ required: 'Username is required' })}
           required
         />
         <TextBox
+          testId="password"
           label="Password"
           name="password"
           type="password"
           register={register({ required: 'Password is required' })}
           required
         />
-        <Button type="submit" label="Login" />
+        <Button testId="login-button" type="submit" label="Login" />
       </form>
       {!isEmpty(errors.username) &&
           <Notification type="smError" message={errors.username.message}/>

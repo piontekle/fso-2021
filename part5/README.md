@@ -1,5 +1,7 @@
 # Fullstack Open Part 5
 
+**bloglist-frontend:** Exercises 5.1 - 
+
 ## Section Summary
 
 ### Login in frontend
@@ -50,4 +52,26 @@ Running the below command will show us coverage:
 CI=true npm test -- --coverage
 ```
 
+The tests we covered were unit tests, and we won't go into the complicatedness of integration tests. Instead we'll focus on end to end tests next.
+
+Jest also provides snapshot testing, where it will alert developers of a change in HTML. If the change is expected, great. If not, that's probably an indication of a bug.
+
 ### End to end testing
+
+End to end (E2E) tests allow us to test our system as a whole. We'll be using [Cypress](https://www.cypress.io/), a testing library that runs completely in the browser. We'll install it to our frontend app (although it could be in either front or back end) and add the following script:
+
+```JSON
+"cypress:open": "cypress open"
+```
+
+We add the following to our backend because Cypress does not start the system when they are run:
+
+```JSON
+"start:test": "cross-env NODE_ENV=test node index.js"
+```
+
+We started on tests, using `cy.visit()` to get to our page, `cy.contains()` and `cy.get()` to find elements, and finally `cy.click()` and `cy.type()` to perform actions. We added the cypress eslint plugin and updated our `.eslintrc` accordingly to get rid of linting errors. Then we looked at adding `id`s (or `data-testid`s) to be able to differentiate between multiple inputs or elements with the same text and using `cy.get()`.
+
+So what about the database? We want it to be in the same state every time, so we added a router for testing to empty the database each time. We can use `cy.request(TYPE, url, body)` to make the post request(s). If we need to test nontext, `contain()` won't work and we can use the `.should(action, value)` syntax. We can also add multiple conditions to a should, chaining `.and()`.
+
+To bypass having to go through the login every time, we setup the login request and localStorage setting in the beforeEach instead of the login process. This will speed up tests that required being logged in.

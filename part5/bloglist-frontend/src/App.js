@@ -42,7 +42,6 @@ const App = () => {
 
   const onLogin = async (data) => {
     try {
-      console.log(data)
       const { data: user } = await login(data)
       window.localStorage.setItem('loggedInUser', JSON.stringify(user))
       setToken(user.token)
@@ -107,7 +106,7 @@ const App = () => {
 
   return (
     <div>
-      <h2>blogs</h2>
+      <h2>Blogs</h2>
       {notif !== null &&
         <Notification message={notif.message} type={notif.type} />
       }
@@ -134,7 +133,11 @@ const App = () => {
             />
           )}
         </>
-      ) : <LoginForm onLogin={onLogin} />
+      ) : (
+        <Togglable buttonLabel="Login" buttonTestId="login-show">
+          <LoginForm onLogin={onLogin} />
+        </Togglable>
+      )
       }
     </div>
   )

@@ -1,14 +1,14 @@
 const jwt = require('jsonwebtoken')
 const isEmpty = require('lodash/isEmpty')
 
-const config = require('../utils/config').config
+const { jwtSecret } = require('../utils/config').config
 const blogListsRouter = require('express').Router()
 
 const BlogList = require('../models/blogList')
 const User = require('../models/user')
 
 const decodeToken = (token) => {
-  const decodedToken = jwt.verify(token, config.jwtSecret)
+  const decodedToken = jwt.verify(token, jwtSecret)
   if (!token || !decodedToken.id) {
     return null
   }
