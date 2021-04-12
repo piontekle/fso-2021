@@ -20,6 +20,7 @@
     "test-dev": "CI=true npm test",
     "test-coverage": "CI=true npm test -- --coverage",
     "cypress:open": "cypress open",
+    "test:e2e": "cypress run",
     "eject": "react-scripts eject",
     "lint": "eslint ."
   },

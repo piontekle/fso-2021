@@ -107,3 +107,5 @@ dist
 
 /base_react_app/
 /cypress_ex/
+
+*/cypress/videos/

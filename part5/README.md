@@ -72,6 +72,16 @@ We add the following to our backend because Cypress does not start the system wh
 
 We started on tests, using `cy.visit()` to get to our page, `cy.contains()` and `cy.get()` to find elements, and finally `cy.click()` and `cy.type()` to perform actions. We added the cypress eslint plugin and updated our `.eslintrc` accordingly to get rid of linting errors. Then we looked at adding `id`s (or `data-testid`s) to be able to differentiate between multiple inputs or elements with the same text and using `cy.get()`.
 
-So what about the database? We want it to be in the same state every time, so we added a router for testing to empty the database each time. We can use `cy.request(TYPE, url, body)` to make the post request(s). If we need to test nontext, `contain()` won't work and we can use the `.should(action, value)` syntax. We can also add multiple conditions to a should, chaining `.and()`.
+So what about the database? We want it to be in the same state every time, so we added a router for testing to empty the database each time. We can use `cy.request(TYPE, url, body)` to make the post request(s). If we need to test nontext, `contain()` won't work and we can use the `.should(action, value)` syntax. We can also add multiple conditions to a should, chaining `.and()`. Additionally, we need to use `find()` when chaining when there would be more than one of a similar element. `get()` would return the whole page. Cypress commands are promises, so if we need to debug at all, we'll have to use `.then()` to get the values they return.
 
-To bypass having to go through the login every time, we setup the login request and localStorage setting in the beforeEach instead of the login process. This will speed up tests that required being logged in.
+To bypass having to go through the login every time, we setup the login request and localStorage setting in the beforeEach instead of the login process. This will speed up tests that required being logged in. We added a Cypress command so that the login will now be reusable across tests (addionitionally did a custom command for getting by testId to make the gets easier for my method). 
+
+Finally, we added a script to run our tests from the command line if needed:
+
+```JSON
+"test:e2e": "cypress run"
+```
+
+**Other Resources:**
+
+- [Cypress Simple But Import Guide](https://docs.cypress.io/guides/core-concepts/introduction-to-cypress#Cypress-Can-Be-Simple-Sometimes)
