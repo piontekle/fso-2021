@@ -31,3 +31,9 @@ Cypress.Commands.add('createUser', ({ name, username, password }) => {
   const user = { name, username, password }
   cy.request('POST', `${apiUrl}/users`, user)
 })
+
+Cypress.Commands.add('testOrder', (testId, order) => {
+  cy.getByTestId(testId).each((el, i) => {
+    cy.wrap(el).should('contain.text', order[i])
+  })
+})

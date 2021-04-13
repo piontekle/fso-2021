@@ -62,13 +62,54 @@ describe('Blog app', function () {
       cy.contains('1')
     })
 
-    it.only('a blog can be deleted by owner', function() {
+    it('a blog can be deleted by owner', function() {
       cy.createBlog({ title: 'Neo Tests', author: 'Neo Matrix', url: 'matrix.com'})
       cy.contains('Neo Tests')
       cy.contains('view').click()
       cy.contains('remove').click()
 
       cy.contains('Neo Tests').should('not.exist')
+    })
+
+    it('a blog cannot be deleted by non-owner', function() {
+      cy.createBlog({ title: 'Neo Tests', author: 'Neo Matrix', url: 'matrix.com'})
+      cy.contains('Logout').click()
+
+      cy.createUser({
+        name: 'Lettie',
+        username: 'lettie',
+        password: 'memory',
+      })
+      cy.login({ username: 'lettie', password: 'memory' })
+      cy.contains('Neo Tests')
+      cy.contains('view').click()
+      cy.contains('remove').click()
+      cy.contains('Neo Tests')
+      cy.contains('Unable to remove blog')
+    })
+
+    it('orders blogs by number of likes', function() {
+      cy.createBlog({ title: 'Neo Tests', author: 'Neo Matrix', url: 'matrix.com'})
+      cy.createBlog({ title: 'Trinity Tests', author: 'Trinity Matrix', url: 'matrix.com' })
+      
+      const initialOrder = ['Neo Tests', 'Trinity Tests']
+      const afterOrder = ['Trinity Tests', 'Neo Tests']
+
+      cy.contains('Neo Tests').contains('view').click()
+      cy.contains('Neo Tests').contains('0')
+      cy.contains('Trinity Tests').contains('view').click()
+      cy.contains('Trinity Tests').contains('0')
+      cy.testOrder('blogList-entry', initialOrder)
+
+      cy.contains('Trinity Tests').contains('like').click()
+      cy.wait(500)
+      cy.testOrder('blogList-entry', afterOrder)
+
+      cy.contains('Neo Tests').contains('like').click()
+      cy.wait(500)
+      cy.contains('Neo Tests').contains('like').click()
+      cy.wait(500)
+      cy.testOrder('blogList-entry', initialOrder)
     })
   })
 })

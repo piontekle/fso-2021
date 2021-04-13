@@ -124,14 +124,16 @@ const App = () => {
               <BlogForm onCreateBlog={onCreateBlog} />
             </Togglable>
           </div>
-          {map(blogs, blog =>
-            <Blog
-              key={blog.id}
-              blog={blog}
-              onRemoveBlog={onRemoveBlog}
-              onUpdateBlog={onUpdateBlog}
-            />
-          )}
+          <div data-testid="blogList">
+            {map(blogs, blog =>
+              <Blog
+                key={blog.id}
+                blog={blog}
+                onRemoveBlog={onRemoveBlog}
+                onUpdateBlog={onUpdateBlog}
+              />
+            )}
+          </div>
         </>
       ) : (
         <Togglable buttonLabel="Login" buttonTestId="login-show">
