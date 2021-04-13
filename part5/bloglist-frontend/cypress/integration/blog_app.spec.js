@@ -4,12 +4,11 @@ const apiUrl = 'http://localhost:3003/api'
 describe('Blog app', function () {
   beforeEach(function() {
     cy.request('POST', `${apiUrl}/testing/reset`)
-    const user = {
+    cy.createUser({
       name: 'Domonic Toretto',
       username: 'dtoretto',
       password: 'family',
-    }
-    cy.request('POST', `${apiUrl}/users`, user)
+    })
     cy.visit(baseUrl)
   })
 
@@ -52,6 +51,15 @@ describe('Blog app', function () {
       cy.getByTestId('url').type('https://testing123.com')
       cy.contains('create').click()
       cy.contains('A Test for the Ages')
+    })
+
+    it.only('a blog can be liked', function() {
+      cy.createBlog({ title: 'Neo Tests', author: 'Neo Matrix', url: 'matrix.com'})
+      cy.contains('view').click()
+      cy.contains('0')
+
+      cy.contains('like').click()
+      cy.contains('1')
     })
   })
 })

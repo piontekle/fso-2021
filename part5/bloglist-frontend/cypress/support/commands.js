@@ -26,3 +26,8 @@ Cypress.Commands.add('createBlog', ({ title, author, url }) => {
 
   cy.visit(baseUrl)
 })
+
+Cypress.Commands.add('createUser', ({ name, username, password }) => {
+  const user = { name, username, password }
+  cy.request('POST', `${apiUrl}/users`, user)
+})
