@@ -27,4 +27,7 @@ part3
 part4
   L blog
     L Exercises 4.1 - 4.23
+part5
+  L bloglist-frontend
+    L Exercises 5.1 - 5.22
 ```

@@ -27,7 +27,7 @@ describe('<Blog />', () => {
   })
 
   test('renders only title and author by default', () => {
-    const div = component.getByTestId('blog-123')
+    const div = component.getByTestId('blogList-entry')
     expect(div).toHaveTextContent('Testing in a Blog')
     expect(div).toHaveTextContent('Bloggy McBlogger')
     expect(div).not.toHaveTextContent('https://blogsrus.com')
@@ -39,7 +39,7 @@ describe('<Blog />', () => {
     const viewButton = component.getByText('view')
     fireEvent.click(viewButton)
 
-    const div = component.getByTestId('blog-123')
+    const div = component.getByTestId('blogList-entry')
     expect(div).toHaveTextContent('Testing in a Blog')
     expect(div).toHaveTextContent('Bloggy McBlogger')
     expect(div).toHaveTextContent('https://blogsrus.com')

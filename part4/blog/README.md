@@ -22,6 +22,10 @@ Run the linter to find formatting and syntax errors.
 
 Run the test suite.
 
+### `npm run start:test`
+
+Start server in test environment for e2e tests
+
 ### Testing
 
 Testing implemented with `Jest` and `supertest`.

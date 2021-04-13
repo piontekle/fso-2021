@@ -1,6 +1,6 @@
 # Fullstack Open Part 5
 
-**bloglist-frontend:** Exercises 5.1 - 
+**bloglist-frontend:** Exercises 5.1 - 5.22
 
 ## Section Summary
 
