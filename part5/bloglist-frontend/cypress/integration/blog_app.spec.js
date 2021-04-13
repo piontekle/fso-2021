@@ -53,13 +53,22 @@ describe('Blog app', function () {
       cy.contains('A Test for the Ages')
     })
 
-    it.only('a blog can be liked', function() {
+    it('a blog can be liked', function() {
       cy.createBlog({ title: 'Neo Tests', author: 'Neo Matrix', url: 'matrix.com'})
       cy.contains('view').click()
       cy.contains('0')
 
       cy.contains('like').click()
       cy.contains('1')
+    })
+
+    it.only('a blog can be deleted by owner', function() {
+      cy.createBlog({ title: 'Neo Tests', author: 'Neo Matrix', url: 'matrix.com'})
+      cy.contains('Neo Tests')
+      cy.contains('view').click()
+      cy.contains('remove').click()
+
+      cy.contains('Neo Tests').should('not.exist')
     })
   })
 })
